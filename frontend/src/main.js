@@ -2,8 +2,25 @@ import './style.css';
 import './app.css';
 
 import logo from './assets/images/logo-universal.png';
-import {Greet} from '../wailsjs/go/main/App';
+import {Greet, DashboardShow} from '../wailsjs/go/main/App';
 
+window.addEventListener("load", function(event) {
+
+    try {
+        DashboardShow()
+            .then((result) => {
+                // Update result with data back from App.Greet()
+                document.getElementById("container").innerHTML = result;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    } catch (err) {
+        console.error(err);
+    }
+}); 
+
+/*
 document.querySelector('#app').innerHTML = `
     <img id="logo" class="logo">
       <div class="result" id="result">Please enter your name below 👇</div>
@@ -41,3 +58,4 @@ window.greet = function () {
         console.error(err);
     }
 };
+*/

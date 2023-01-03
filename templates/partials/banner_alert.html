@@ -1,0 +1,10 @@
+{{ define "partials/banner_alert.html" }}
+
+{{ if .message }}
+<div class="alert alert-success" role="alert">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{ .message }}
+</div>
+{{ end }}
+
+{{ end }}
