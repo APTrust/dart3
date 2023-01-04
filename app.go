@@ -13,6 +13,13 @@ type App struct {
 	Context *common.Context
 }
 
+type Response struct {
+	Content      string `json:"content"`
+	ModalContent string `json:"modalContent"`
+	Nav          string `json:"nav"`
+	Error        string `json:"error"`
+}
+
 // NewApp creates a new App application struct
 func NewApp() *App {
 	return &App{}
@@ -30,9 +37,24 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) DashboardShow() string {
+func (a *App) DashboardShow() Response {
 	buf := bytes.Buffer{}
 	err := a.Context.Templates.ExecuteTemplate(&buf, "dashboard/show.html", nil)
+	if err != nil {
+		panic(err)
+	}
+	return Response{
+		Content: buf.String(),
+		Nav:     a.RenderNav("Dashboard"),
+	}
+}
+
+func (a *App) RenderNav(section string) string {
+	data := map[string]string{
+		"section": section,
+	}
+	buf := bytes.Buffer{}
+	err := a.Context.Templates.ExecuteTemplate(&buf, "partials/nav.html", data)
 	if err != nil {
 		panic(err)
 	}

@@ -1,61 +1,38 @@
-import './style.css';
-import './app.css';
-
-import logo from './assets/images/logo-universal.png';
+import logo from '../src/img/dart.png';
 import {Greet, DashboardShow} from '../wailsjs/go/main/App';
 
 window.addEventListener("load", function(event) {
-
-    try {
-        DashboardShow()
-            .then((result) => {
-                // Update result with data back from App.Greet()
-                document.getElementById("container").innerHTML = result;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    } catch (err) {
-        console.error(err);
-    }
+    load(DashboardShow);
 }); 
 
-/*
-document.querySelector('#app').innerHTML = `
-    <img id="logo" class="logo">
-      <div class="result" id="result">Please enter your name below 👇</div>
-      <div class="input-box" id="input">
-        <input class="input" id="name" type="text" autocomplete="off" />
-        <button class="btn" onclick="greet()">Greet</button>
-      </div>
-    </div>
-`;
-document.getElementById('logo').src = logo;
-
-let nameElement = document.getElementById("name");
-nameElement.focus();
-let resultElement = document.getElementById("result");
-
-// Setup the greet function
-window.greet = function () {
-    // Get name
-    let name = nameElement.value;
-
-    // Check if the input is empty
-    if (name === "") return;
-
-    // Call App.Greet(name)
+function load(fn) {
     try {
-        Greet(name)
+        fn()
             .then((result) => {
-                // Update result with data back from App.Greet()
-                resultElement.innerText = result;
+                console.log(result)
+                if (result.content) {
+                    document.getElementById("container").innerHTML = result.content;
+                }
+                if (result.nav) {
+                    document.getElementById("nav").innerHTML = result.nav;
+                }
+                if (result.modalContent) {
+                    document.getElementById("modalContent").innerHTML = result.modalContent;
+                }                
             })
             .catch((err) => {
-                console.error(err);
+                logError(err);
             });
     } catch (err) {
-        console.error(err);
+        logError(err);
     }
-};
-*/
+}
+
+function logError(err) {
+    console.log(err)
+    try {
+        alert(err)
+    } catch (ex) {
+        console.log(ex)
+    }
+}

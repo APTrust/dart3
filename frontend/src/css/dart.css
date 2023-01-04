@@ -1,3 +1,7 @@
+html, body {
+    background-color: #ffffff;
+}
+
 /* Any clickable element */
 .clickable, .clickable-card, .clickable-row, .repository-clickable-row, .local-file {
     cursor: pointer;

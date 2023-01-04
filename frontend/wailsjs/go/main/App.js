@@ -9,3 +9,7 @@ export function DashboardShow() {
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
+
+export function RenderNav(arg1) {
+  return window['go']['main']['App']['RenderNav'](arg1);
+}
