@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"dart/common"
-	"fmt"
 )
 
 // App struct
@@ -32,31 +31,36 @@ func (a *App) startup(ctx context.Context) {
 	a.Context = common.NewContext()
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
-
 func (a *App) DashboardShow() Response {
-	buf := bytes.Buffer{}
-	err := a.Context.Templates.ExecuteTemplate(&buf, "dashboard/show.html", nil)
-	if err != nil {
-		panic(err)
-	}
+	response := a.initResponse("Dashboard")
+	response.Content = a.renderTemplate("dashboard/show.html", nil)
+	return response
+}
+
+func (a *App) JobShowFiles() Response {
+	response := a.initResponse("Jobs")
+	response.Content = a.renderTemplate("job/files.html", nil)
+	return response
+}
+
+func (a *App) initResponse(section string) Response {
 	return Response{
-		Content: buf.String(),
-		Nav:     a.RenderNav("Dashboard"),
+		Nav: a.renderNav(section),
 	}
 }
 
-func (a *App) RenderNav(section string) string {
-	data := map[string]string{
-		"section": section,
-	}
+func (a *App) renderTemplate(name string, data interface{}) string {
 	buf := bytes.Buffer{}
-	err := a.Context.Templates.ExecuteTemplate(&buf, "partials/nav.html", data)
+	err := a.Context.Templates.ExecuteTemplate(&buf, name, data)
 	if err != nil {
 		panic(err)
 	}
 	return buf.String()
+}
+
+func (a *App) renderNav(section string) string {
+	data := map[string]string{
+		"section": section,
+	}
+	return a.renderTemplate("partials/nav.html", data)
 }

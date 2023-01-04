@@ -1,15 +1,16 @@
 import logo from '../src/img/dart.png';
-import {Greet, DashboardShow} from '../wailsjs/go/main/App';
+import * as app from '../wailsjs/go/main/App';
 
 window.addEventListener("load", function(event) {
-    load(DashboardShow);
+    load(app.DashboardShow);    
+    attachNavEvents();
 }); 
 
 function load(fn) {
     try {
         fn()
             .then((result) => {
-                console.log(result)
+                //console.log(result)
                 if (result.content) {
                     document.getElementById("container").innerHTML = result.content;
                 }
@@ -36,3 +37,23 @@ function logError(err) {
         console.log(ex)
     }
 }
+
+
+function attachNavEvents() {
+    document.querySelectorAll("[data-func]").forEach(function(item){
+        let functionName = item.dataset.func;        
+        item.addEventListener("click", function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            let fn = app[functionName];
+            if (!fn) {
+                alert("Bad function name: " + functionName)
+                return
+            }
+            load(fn);
+        })
+        console.log("Attached " + functionName)
+    })
+}
+
+window.attachNavEvents = attachNavEvents;

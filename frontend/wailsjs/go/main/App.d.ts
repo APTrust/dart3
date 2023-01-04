@@ -4,6 +4,4 @@ import {main} from '../models';
 
 export function DashboardShow():Promise<main.Response>;
 
-export function Greet(arg1:string):Promise<string>;
-
-export function RenderNav(arg1:string):Promise<string>;
+export function JobShowFiles():Promise<main.Response>;
