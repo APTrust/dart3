@@ -58,6 +58,11 @@ issues that may prevent us from being able to use it.
 external system dependencies on Mac and Linux. Awaiting response from
 developer re: external dependencies.
 
+Zenity is looking better, as users would need to install a runtime
+dependency on Linux/Unix only. See the response to the
+[dependency quesion](https://github.com/ncruces/zenity/discussions/45)
+on GitHub.
+
 The [Fyne](https://github.com/fyne-io/fyne) file dialog does not seem
 to support multiple selection. Single clicking opens a folder instead
 of selecting it. It's also ugly.
