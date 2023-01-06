@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -57,4 +58,21 @@ func DefaultString(value, _default string) string {
 		return value
 	}
 	return _default
+}
+
+// Dict returns an interface map suitable for passing into
+// sub templates.
+func Dict(values ...interface{}) (map[string]interface{}, error) {
+	if len(values)%2 != 0 {
+		return nil, fmt.Errorf("wrong number of params: dict args should be pairs")
+	}
+	dict := make(map[string]interface{}, len(values)/2)
+	for i := 0; i < len(values); i += 2 {
+		key, ok := values[i].(string)
+		if !ok {
+			return nil, fmt.Errorf("invalid type: dict key must be representable as string. key = %v", values[i])
+		}
+		dict[key] = values[i+1]
+	}
+	return dict, nil
 }

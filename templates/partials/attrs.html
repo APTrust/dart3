@@ -1,0 +1,3 @@
+{{ define "partials/attrs.html" }}
+{{- range $attr := .attrs }}"{{ $attr.Name }}={{ $attr.Value }}" {{ end -}}
+{{ end }}

@@ -1,17 +1,17 @@
 {{ define "partials/input_checkbox.html" }}
 
-<div class="bottom-buttons">
-    {{ if .form.obj.userCanDelete }}
-    <div class="pull-left">
-      <a class="btn btn-danger" href="#{{ .form.objType }}/destroy?id={{ .form.fields.id.value }}" role="button">Delete</a>
-    </div>
-    {{ end }}
-    <div class="pull-right">
-      <a class="btn btn-primary" href="#{{ .form.objType }}/update?id={{ .form.fields.id.value }}" role="button">Save</a>
-    </div>
-    <div class="pull-right mr-5">
-      <a class="btn btn-secondary" href="#{{ .form.objType }}/list" role="button">Cancel</a>
-    </div>
+
+<div class="form-check {{ template "partials/classes.html" .field }} {{ .field.formGroupClass }}"
+    {{ template "partials/attrs.html" .field }}
+     {{ if .field.hide }}style="display:none;"{{ end }}>
+  <label class="form-check-label">
+    <input class="form-check-input" type="checkbox" name="{{ .field.name }}" value="{{ .field.value }}" {{ if .field.selected }}checked{{ end }} />
+    {{ .field.label }}
+  </label>
 </div>
+
+<small id="{{ .field.id }}Error" class="form-text text-danger">
+    {{ .field.error }}
+</small>
 
 {{ end }}

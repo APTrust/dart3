@@ -23,6 +23,7 @@ func getFuncMap() template.FuncMap {
 		"dateUS":        DateUS,
 		"dateTimeUS":    DateTimeUS,
 		"defaultString": DefaultString,
+		"dict":          Dict,
 		"unixToISO":     UnixToISO,
 		"yesNo":         YesNo,
 	}
