@@ -2,8 +2,9 @@ import logo from '../src/img/dart.png';
 import * as app from '../wailsjs/go/main/App';
 
 window.addEventListener("load", function(event) {
-    load(app.DashboardShow);    
-    attachNavEvents();
+    load(app.DashboardShow)
+    initObserver()
+    attachNavEvents()
 }); 
 
 function load(fn) {
@@ -41,19 +42,30 @@ function logError(err) {
 
 function attachNavEvents() {
     document.querySelectorAll("[data-func]").forEach(function(item){
-        let functionName = item.dataset.func;        
-        item.addEventListener("click", function(e) {
-            e.preventDefault()
-            e.stopPropagation()
-            let fn = app[functionName];
-            if (!fn) {
-                alert("Bad function name: " + functionName)
-                return
-            }
-            load(fn);
-        })
-        console.log("Attached " + functionName)
+        let functionName = item.dataset.func;
+        if (!item.dataset.funcInitialized) {
+            item.addEventListener("click", function(e) {
+                e.preventDefault()
+                e.stopPropagation()
+                let fn = app[functionName];
+                if (!fn) {
+                    alert("Bad function name: " + functionName)
+                    return
+                }
+                item.dataset.funcInitialized = true
+                load(fn);
+                console.log("Attached " + functionName)
+            })
+        }
     })
 }
 
-window.attachNavEvents = attachNavEvents;
+function initObserver() {
+    const callback = function(mutationsList, observer) {
+        attachNavEvents()
+    }
+    const observer = new MutationObserver(callback);
+    const navContainer = document.getElementById("nav")
+    observer.observe(navContainer, {childList: true, characterData: true})
+    return observer
+}

@@ -55,13 +55,15 @@ written in C and would need to be wrapped. It also has some open
 issues that may prevent us from being able to use it.
 
 [Zenity](https://github.com/ncruces/zenity) looks good, but it has
-external system dependencies on Mac and Linux.
+external system dependencies on Mac and Linux. Awaiting response from
+developer re: external dependencies.
 
 The [Fyne](https://github.com/fyne-io/fyne) file dialog does not seem
 to support multiple selection. Single clicking opens a folder instead
 of selecting it. It's also ugly.
 
-[wxGo](https://github.com/dontpanic92/wxGo) seems sketchy.
+[wxGo](https://github.com/dontpanic92/wxGo) looks like it's a huge
+library to wrap.
 
 [Go QT](https://github.com/therecipe/qt) looks to be quite heavy and
 daunting.
