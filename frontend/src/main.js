@@ -9,6 +9,16 @@ window.addEventListener("load", function(event) {
 
 function load(fn) {
     try {
+        // TODO: Load function params here.
+        // 
+        // * List requests may have filter params
+        // * Show, edit, and delete request will have UUID param
+        // * No params for create requests
+        // * Update requests will have object params. The object type will
+        //   match the request type. E.g. update app setting will take an
+        //   AppSetting object.
+        //
+        // 
         fn()
             .then((result) => {
                 //console.log(result)

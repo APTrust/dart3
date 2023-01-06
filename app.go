@@ -4,12 +4,23 @@ import (
 	"bytes"
 	"context"
 	"dart/common"
+
+	"github.com/APTrust/dart-runner/core"
 )
 
 // App struct
 type App struct {
 	ctx     context.Context
 	Context *common.Context
+}
+
+type RequestParams struct {
+	ID      string
+	Filters map[string]string
+	//AppSetting
+	Job            *core.Job
+	StorageService *core.StorageService
+	WorkFlow       *core.Workflow
 }
 
 type Response struct {
