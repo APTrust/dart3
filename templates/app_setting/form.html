@@ -2,23 +2,21 @@
 
 <h2>Application Setting</h2>
 
-<form method="post" action="#" id="{{ .form.id }}">
+<form method="post" action="#" id="{{ .ID }}">
 
-  {{ template "partials/input_text.html" dict "field" .form.fields.name }}
+  {{ template "partials/input_text.html" dict "field" .Fields.Name }}
 
 
-  {{ if .form.fields.value.choices }}
-  {{ template "partials/input_select.html" dict "field" .form.fields.value }}
+  {{ if .Fields.Value.Choices }}
+  {{ template "partials/input_select.html" dict "field" .Fields.Value }}
   {{ else }}
-  {{ template "partials/input_text.html" dict "field"  .form.fields.value }}
+  {{ template "partials/input_text.html" dict "field"  .Fields.Value }}
   {{ end }}
 
-  {{ template "partials/input_hidden.html" dict "field"  .form.fields.userCanDelete }}
+  {{ template "partials/input_hidden.html" dict "field"  .Fields.UserCanDelete }}
 
-  {{ template "partials/input_text.html" dict "field" .form.fields.id }}
-
-  {{ template "partials/input_text.html" dict "form" .form }}
-
+  {{ template "partials/input_hidden.html" dict "field" .Fields.ID }}
+  
 </form>
 
 {{ end }}

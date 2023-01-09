@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/APTrust/dart-runner v0.0.0-20220811141742-7dae47e1019f
+	github.com/google/uuid v1.3.0
 	github.com/wailsapp/wails/v2 v2.3.1
 )
 
@@ -12,7 +13,6 @@ require (
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
 	github.com/json-iterator/go v1.1.10 // indirect

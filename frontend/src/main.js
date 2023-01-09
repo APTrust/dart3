@@ -49,6 +49,13 @@ function logError(err) {
     }
 }
 
+function formToJson() {
+    const form = document.querySelector('form');
+    const data = new FormData(form);
+    const json = Object.fromEntries(data.entries());
+    console.log(json);
+}
+
 
 function attachNavEvents() {
     document.querySelectorAll("[data-func]").forEach(function(item){

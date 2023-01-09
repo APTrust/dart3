@@ -1,7 +1,7 @@
 {{ define "partials/input_hidden.html" }}
 
 <div class="form-group">
-    <input type="hidden" id="{{ .field.id }}" name="{{ .field.name }}" value="{{ .field.value }}"
+    <input type="hidden" name="{{ .field.Name }}" value="{{ .field.Value }}"
            class="form-control {{ template "partials/classes.html" .field }}"
            {{ template "partials/attrs.html" .field }} />
 </div>

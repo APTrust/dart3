@@ -2,8 +2,8 @@
 
 <div class="custom-file {{ .field.formGroupClass }}">
     <input type="file" id="{{ .field.id }}" name="{{ .field.name }}"
-           class="custom-file-input {{ range $class := .field.cssClasses }}{{ $class }} {{ end }}"
-           {{ range $attr := .field.attrs }}{{ $attr.Name }}="{{ $attr.Value }}" {{ end }} />
+           class="custom-file-input {{ template "partials/classes.html" .field }}"
+           {{ template "partials/attrs.html" .field }} />
     <label class="custom-file-label {{ if .field.help }}clickable{{ end }}" for="{{ .field.id }}"
            {{ if .field.help }}data-toggle="popover" data-trigger="hover" title="{{ .field.label }}" data-content="{{ .field.help }}"{{ end }}>{{ .field.label }} {{ if .field.attrs.required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} {{ if .field.help }}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
     <small id="{{ .field.id }}Error" class="form-text text-danger">
