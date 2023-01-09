@@ -3,8 +3,9 @@ import * as app from '../wailsjs/go/main/App';
 
 window.addEventListener("load", function(event) {
     load(app.DashboardShow)
-    initObserver()
+    initNavObserver()
     attachNavEvents()
+    initMainContentObserver()
 }); 
 
 function load(fn) {
@@ -77,12 +78,36 @@ function attachNavEvents() {
     })
 }
 
-function initObserver() {
+function initNavObserver() {
     const callback = function(mutationsList, observer) {
         attachNavEvents()
     }
     const observer = new MutationObserver(callback);
     const navContainer = document.getElementById("nav")
+    observer.observe(navContainer, {childList: true, characterData: true})
+    return observer
+}
+
+function initPopovers() {
+    // Attach popover help tips to dynamically added elements
+    var popOverSettings = {
+        container: 'body',
+        trigger: 'hover',
+        html: true,
+        selector: '[data-toggle="popover"]',
+        content: function () {
+            return $('#popover-content').html();
+        }
+    }
+    $('body').popover(popOverSettings);
+}
+
+function initMainContentObserver() {
+    const callback = function(mutationsList, observer) {
+        initPopovers()
+    }
+    const observer = new MutationObserver(callback);
+    const navContainer = document.getElementById("container")
     observer.observe(navContainer, {childList: true, characterData: true})
     return observer
 }

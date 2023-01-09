@@ -4,18 +4,20 @@
 
 <form method="post" action="#" id="{{ .ID }}">
 
-  {{ template "partials/input_text.html" dict "field" .Fields.Name }}
+  {{ template "partials/input_text.html" dict "field" .Form.Fields.Name }}
 
 
-  {{ if .Fields.Value.Choices }}
-  {{ template "partials/input_select.html" dict "field" .Fields.Value }}
+  {{ if .Form.Fields.Value.Choices }}
+  {{ template "partials/input_select.html" dict "field" .Form.Fields.Value }}
   {{ else }}
-  {{ template "partials/input_text.html" dict "field"  .Fields.Value }}
+  {{ template "partials/input_text.html" dict "field"  .Form.Fields.Value }}
   {{ end }}
 
-  {{ template "partials/input_hidden.html" dict "field"  .Fields.UserCanDelete }}
+  {{ template "partials/input_hidden.html" dict "field"  .Form.Fields.UserCanDelete }}
 
-  {{ template "partials/input_hidden.html" dict "field" .Fields.ID }}
+  {{ template "partials/input_hidden.html" dict "field" .Form.Fields.ID }}
+
+  {{ template "partials/form_buttons.html" . }}
   
 </form>
 

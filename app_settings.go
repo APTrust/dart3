@@ -14,7 +14,13 @@ func (a *App) AppSettingList() Response {
 func (a *App) AppSettingCreate() Response {
 	setting := common.NewAppSetting()
 	response := a.initResponse("Settings")
-	response.Content = a.renderTemplate("app_setting/form.html", setting.ToForm())
+	form := setting.ToForm()
+	form.CancelFunction = "AppSettingList"
+	form.SubmitFunction = "AppSettingSave"
+	form.DeleteFunction = "AppSettingDelete"
+	data := make(map[string]interface{})
+	data["Form"] = form
+	response.Content = a.renderTemplate("app_setting/form.html", data)
 	return response
 }
 

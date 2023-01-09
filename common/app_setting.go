@@ -44,6 +44,7 @@ func (setting *AppSetting) ToForm() *Form {
 
 	valueField := form.AddField("Value", "Value", setting.Value, true)
 	valueField.Error = setting.Errors["Value"]
+	valueField.Help = "This help text should appear in a popup." // setting.Help
 
 	return form
 }

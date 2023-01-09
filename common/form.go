@@ -34,8 +34,12 @@ func NewField(name, label, value string, required bool) *Field {
 }
 
 type Form struct {
-	ID     string
-	Fields map[string]*Field
+	ID             string
+	Fields         map[string]*Field
+	SubmitFunction string
+	CancelFunction string
+	DeleteFunction string
+	UserCanDelete  bool
 }
 
 func NewForm(id string) *Form {
