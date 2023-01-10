@@ -27,6 +27,7 @@ func init() {
 		Log:       initLogger(paths),
 		Paths:     paths,
 	}
+	InitSchema()
 }
 
 func initLogger(paths *Paths) *log.Logger {
@@ -48,6 +49,8 @@ func initDB(paths *Paths) *sql.DB {
 }
 
 func initTemplates() *template.Template {
+	// TODO: Relative paths are different between `wails dev` and `go test ./...`.
+	// The latter won't find the templates. We need to fix that.
 	return template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("templates/**/*.html"))
 }
 

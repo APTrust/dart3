@@ -1,42 +1,49 @@
 package common
 
-import "encoding/json"
-
 type QueryResult struct {
-	dbObjects []*DBObject
+	AppSetting       *AppSetting
+	AppSettings      []*AppSetting
+	InternalSetting  *InternalSetting
+	InternalSettings []*InternalSetting
+	ObjType          string
 }
 
-func NewQueryResultMultiple(list []*DBObject) *QueryResult {
+func NewQueryResult(objType string) *QueryResult {
 	return &QueryResult{
-		dbObjects: list,
+		ObjType: objType,
 	}
 }
 
-func NewQueryResultSingle(obj *DBObject) *QueryResult {
-	list := make([]*DBObject, 1)
-	list[0] = obj
-	return &QueryResult{
-		dbObjects: list,
-	}
-}
+// func NewQueryResultSingle(obj interface{}, objType string) *QueryResult {
+// 	list := make([]interface{}, 1)
+// 	list[0] = obj
+// 	return &QueryResult{
+// 		items:   list,
+// 		ObjType: objType,
+// 		Count:   len(list),
+// 	}
+// }
 
-func (qr *QueryResult) AppSetting() (*AppSetting, error) {
-	dbObj := qr.dbObjects[0]
-	setting := &AppSetting{}
-	err := json.Unmarshal([]byte(dbObj.Json), setting)
-	return setting, err
-}
+// func (qr *QueryResult) AppSetting() *AppSetting {
+// 	return qr.items[0].(*AppSetting)
+// }
 
-func (qr *QueryResult) AppSettingList() ([]*AppSetting, error) {
-	list := make([]*AppSetting, len(qr.dbObjects))
-	for i := 0; i < len(qr.dbObjects); i++ {
-		setting := &AppSetting{}
-		err := json.Unmarshal([]byte(qr.dbObjects[i].Json), setting)
-		if err != nil {
-			Dart.Log.Printf("[ERROR] Json unmarshal error on AppSetting %s: %v", qr.dbObjects[i].Name, err)
-			return nil, err
-		}
-		list[i] = setting
-	}
-	return list, nil
-}
+// func (qr *QueryResult) AppSettingList() []*AppSetting {
+// 	list := make([]*AppSetting, len(qr.items))
+// 	for i := 0; i < qr.items; i++ {
+// 		list[i] = qr.items[i].(*AppSetting)
+// 	}
+// 	return list
+// }
+
+// func (qr *QueryResult) InternalSetting() *InternalSetting {
+// 	return qr.items[0].(*InternalSetting)
+// }
+
+// func (qr *QueryResult) InternalSettingList() []*InternalSetting {
+// 	list := make([]*InternalSetting, len(qr.items))
+// 	for i := 0; i < qr.items; i++ {
+// 		list[i] = qr.items[i].(*InternalSetting)
+// 	}
+// 	return list
+// }
