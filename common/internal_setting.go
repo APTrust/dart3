@@ -1,9 +1,33 @@
 package common
 
+import "github.com/google/uuid"
+
 type InternalSetting struct {
-	ID    string
-	Name  string
-	Value string
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+func NewInternalSetting(name, value string) *InternalSetting {
+	return &InternalSetting{
+		ID: uuid.NewString(),
+	}
+}
+
+func InternalSettingFind(uuid string) (*InternalSetting, error) {
+	result, err := ObjFind(uuid)
+	if err != nil {
+		return nil, err
+	}
+	return result.InternalSetting, err
+}
+
+func InternalSettingList(orderBy string, limit, offset int) ([]*InternalSetting, error) {
+	result, err := ObjList("InternalSetting", orderBy, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+	return result.InternalSettings, err
 }
 
 func (setting *InternalSetting) ObjID() string {
@@ -16,4 +40,12 @@ func (setting *InternalSetting) ObjName() string {
 
 func (setting *InternalSetting) ObjType() string {
 	return "InternalSetting"
+}
+
+func (setting *InternalSetting) Save() error {
+	return ObjSave(setting)
+}
+
+func (setting *InternalSetting) Delete() error {
+	return ObjDelete(setting.ID)
 }

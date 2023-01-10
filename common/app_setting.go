@@ -9,12 +9,12 @@ import (
 )
 
 type AppSetting struct {
-	ID            string
-	Name          string
-	Value         string
-	Help          string
-	Errors        map[string]string
-	UserCanDelete bool
+	ID            string            `json:"id"`
+	Name          string            `json:"name"`
+	Value         string            `json:"value"`
+	Help          string            `json:"help"`
+	Errors        map[string]string `json:"errors"`
+	UserCanDelete bool              `json:"userCanDelete"`
 }
 
 func NewAppSetting() *AppSetting {
@@ -22,6 +22,22 @@ func NewAppSetting() *AppSetting {
 		ID:     uuid.NewString(),
 		Errors: make(map[string]string),
 	}
+}
+
+func AppSettingFind(uuid string) (*AppSetting, error) {
+	result, err := ObjFind(uuid)
+	if err != nil {
+		return nil, err
+	}
+	return result.AppSetting, err
+}
+
+func AppSettingList(orderBy string, limit, offset int) ([]*AppSetting, error) {
+	result, err := ObjList("AppSetting", orderBy, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+	return result.AppSettings, err
 }
 
 func (setting *AppSetting) ObjID() string {
@@ -34,6 +50,20 @@ func (setting *AppSetting) ObjName() string {
 
 func (setting *AppSetting) ObjType() string {
 	return "AppSetting"
+}
+
+func (setting *AppSetting) Save() error {
+	if !setting.Validate() {
+		return ErrObjecValidation
+	}
+	return ObjSave(setting)
+}
+
+func (setting *AppSetting) Delete() error {
+	if !setting.UserCanDelete {
+		return ErrNotDeletable
+	}
+	return ObjDelete(setting.ID)
 }
 
 func AppSettingFromJson(jsonStr string) (*AppSetting, error) {

@@ -61,15 +61,15 @@ func ObjSave(obj DartObject) error {
 		return err
 	}
 	stmt := `insert into dart (uuid, obj_type, obj_name, obj_json, updated_at) values (?,?,?,?,?)
-	on conflict do update set obj_name=excluded.obj_name, obj_json=excluded.obj_json, updated_at=excluded.updated_at`
+	on conflict do update set obj_name=excluded.obj_name, obj_json=excluded.obj_json, updated_at=excluded.updated_at where uuid=excluded.uuid`
 	_, err = Dart.DB.Exec(stmt, obj.ObjID(), obj.ObjType(), obj.ObjName(), string(jsonBytes), time.Now().UTC())
 	return err
 }
 
-func ObjGet(uuid string) (*QueryResult, error) {
+func ObjFind(uuid string) (*QueryResult, error) {
 	var objType string
 	var objJson string
-	row := Dart.DB.QueryRow("select obj_type, obj_json from artifacts where uuid=?", uuid)
+	row := Dart.DB.QueryRow("select obj_type, obj_json from dart where uuid=?", uuid)
 	err := row.Scan(&objType, &objJson)
 	if err != nil {
 		return nil, err
@@ -91,8 +91,8 @@ func ObjGet(uuid string) (*QueryResult, error) {
 	return qr, err
 }
 
-func ObjList(objType, orderBy string, offset, limit int) (*QueryResult, error) {
-	rows, err := Dart.DB.Query("select obj_json from artifacts where obj_type=? order by ? offset ? limit ?", objType, orderBy, offset, limit)
+func ObjList(objType, orderBy string, limit, offset int) (*QueryResult, error) {
+	rows, err := Dart.DB.Query("select obj_json from dart where obj_type=? order by ? limit ? offset ?", objType, orderBy, offset, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -198,5 +198,23 @@ func ArtifactList(bagName string) ([]*Artifact, error) {
 
 func ArtifactDelete(uuid string) error {
 	_, err := Dart.DB.Exec("delete from artifacts where uuid=?", uuid)
+	return err
+}
+
+// ClearDartTable is for testing use only
+func ClearDartTable() error {
+	if !TestsAreRunning() {
+		return ErrInvalidOperation
+	}
+	_, err := Dart.DB.Exec("delete from dart")
+	return err
+}
+
+// ClearArtifactsTable is for testing use only
+func ClearArtifactsTable() error {
+	if !TestsAreRunning() {
+		return ErrInvalidOperation
+	}
+	_, err := Dart.DB.Exec("delete from artifacts")
 	return err
 }
