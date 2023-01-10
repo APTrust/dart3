@@ -41,6 +41,11 @@ func initLogger(paths *Paths) *log.Logger {
 
 func initDB(paths *Paths) *sql.DB {
 	dbPath := path.Join(paths.DataDir, "dart.db")
+	// Run tests in an in-memory db, so we don't pollute
+	// our actual dart db.
+	if TestsAreRunning() {
+		dbPath = ":memory:"
+	}
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		log.Fatal(err)
@@ -49,9 +54,18 @@ func initDB(paths *Paths) *sql.DB {
 }
 
 func initTemplates() *template.Template {
-	// TODO: Relative paths are different between `wails dev` and `go test ./...`.
-	// The latter won't find the templates. We need to fix that.
-	return template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("templates/**/*.html"))
+	// Note: When running `wails dev`, we'll load templates from the "templates" dir.
+	// When running `go test ./...`, go may descend into subdirectories, so we have
+	// to look up the directory tree to find the templates; otherwise, we get a panic.
+	var t *template.Template
+	if FileExists("templates") {
+		t = template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("templates/**/*.html"))
+	} else if FileExists("../templates") {
+		t = template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("../templates/**/*.html"))
+	} else if FileExists("../../templates") {
+		t = template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("../../templates/**/*.html"))
+	}
+	return t
 }
 
 func getFuncMap() template.FuncMap {
