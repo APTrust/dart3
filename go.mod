@@ -5,11 +5,14 @@ go 1.18
 require (
 	github.com/APTrust/dart-runner v0.0.0-20220811141742-7dae47e1019f
 	github.com/google/uuid v1.3.0
+	github.com/mattn/go-sqlite3 v1.14.16
+	github.com/stretchr/testify v1.8.0
 	github.com/wailsapp/wails/v2 v2.3.1
 )
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
@@ -32,6 +35,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/pkg/browser v0.0.0-20210706143420-7d21f8c997e2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/xid v1.2.1 // indirect
 	github.com/samber/lo v1.27.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
@@ -45,6 +49,7 @@ require (
 	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/ini.v1 v1.57.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 // replace github.com/wailsapp/wails/v2 v2.3.1 => /home/diamond/go/pkg/mod
