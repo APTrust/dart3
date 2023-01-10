@@ -10,8 +10,8 @@ import (
 
 // App struct
 type App struct {
-	ctx     context.Context
-	Context *common.Context
+	ctx  context.Context
+	Dart *common.DartContext
 }
 
 type RequestParams struct {
@@ -39,7 +39,7 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
-	a.Context = common.NewContext()
+	a.Dart = common.Dart
 }
 
 func (a *App) DashboardShow() Response {
@@ -56,7 +56,7 @@ func (a *App) initResponse(section string) Response {
 
 func (a *App) renderTemplate(name string, data interface{}) string {
 	buf := bytes.Buffer{}
-	err := a.Context.Templates.ExecuteTemplate(&buf, name, data)
+	err := a.Dart.Templates.ExecuteTemplate(&buf, name, data)
 	if err != nil {
 		panic(err)
 	}

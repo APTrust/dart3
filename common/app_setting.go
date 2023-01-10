@@ -24,6 +24,18 @@ func NewAppSetting() *AppSetting {
 	}
 }
 
+func (setting *AppSetting) ObjID() string {
+	return setting.ID
+}
+
+func (setting *AppSetting) ObjName() string {
+	return setting.Name
+}
+
+func (setting *AppSetting) ObjType() string {
+	return "AppSetting"
+}
+
 func AppSettingFromJson(jsonStr string) (*AppSetting, error) {
 	setting := &AppSetting{}
 	err := json.Unmarshal([]byte(jsonStr), setting)

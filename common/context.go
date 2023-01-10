@@ -10,16 +10,18 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type Context struct {
+var Dart *DartContext
+
+type DartContext struct {
 	Templates *template.Template
 	DB        *sql.DB
 	Log       *log.Logger
 	Paths     *Paths
 }
 
-func NewContext() *Context {
+func init() {
 	paths := NewPaths()
-	return &Context{
+	Dart = &DartContext{
 		Templates: initTemplates(),
 		DB:        initDB(paths),
 		Log:       initLogger(paths),
