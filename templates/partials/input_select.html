@@ -1,19 +1,20 @@
 {{ define "partials/input_select.html" }}
 
-<div class="form-group {{ .field.formGroupClass }}">
-    <label class="control-label" for="{{ .field.id }}"
-           {{ if .field.help }}data-toggle="popover" data-trigger="hover" title="{{ .field.label }}" data-content="{{ .field.help }}"{{ end }}>
-           {{ .field.label }} {{ if .field.attrs.required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} 
-           {{ if .field.help }}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
-    <select id="{{ .field.id }}" name="{{ .field.name }}"
+<div class="form-group {{ .field.FormGroupClass }}">
+    <label class="control-label" for="{{ .field.ID }}"
+           {{ if .field.help }}data-toggle="popover" data-trigger="hover" title="{{ .field.Label }}" data-content="{{ .field.Help }}"{{ end }}>
+           {{ .field.Label }} {{ if .field.Attrs.required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} 
+           {{ if .field.Help }}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
+    <select id="{{ .field.ID }}" name="{{ .field.Name }}"
            class="form-control {{ template "partials/classes.html" . }}"
-           {{ template "partials/attrs.html" . }}>
-      {{ range $option := .field.choices }}
-        <option value="{{ $option.value }}" {{ if $option.selected }}selected{{ end }}>{{ $option.label }}</option>
+           {{ template "partials/attrs.html" . }}
+           data-cast="{{ .field.Cast }}">
+      {{ range $option := .field.Choices }}
+        <option value="{{ $option.Value }}" {{ if $option.Selected }}selected{{ end }}>{{ $option.Label }}</option>
       {{ end }}
     </select>
-    <small id="{{ .field.id }}Error" class="form-text text-danger">
-      {{ .field.error }}
+    <small id="{{ .field.ID }}Error" class="form-text text-danger">
+      {{ .field.Error }}
     </small>
 </div>
 

@@ -108,13 +108,16 @@ func (setting *AppSetting) ToForm() *Form {
 	form := NewForm(TypeAppSetting)
 
 	form.AddField("ID", "ID", setting.ID, true)
-	form.AddField("UserCanDelete", "UserCanDelete", strconv.FormatBool(setting.UserCanDelete), true)
+
+	userCanDeleteField := form.AddField("UserCanDelete", "UserCanDelete", strconv.FormatBool(setting.UserCanDelete), true)
+	userCanDeleteField.Cast = CastToBool
+
 	nameField := form.AddField("Name", "Name", setting.Name, true)
 	nameField.Error = setting.Errors["Name"]
 
 	valueField := form.AddField("Value", "Value", setting.Value, true)
 	valueField.Error = setting.Errors["Value"]
-	valueField.Help = "This help text should appear in a popup." // setting.Help
+	valueField.Help = setting.Help
 
 	return form
 }

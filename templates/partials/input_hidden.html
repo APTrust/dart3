@@ -3,7 +3,8 @@
 <div class="form-group">
     <input type="hidden" name="{{ .field.Name }}" value="{{ .field.Value }}"
            class="form-control {{ template "partials/classes.html" .field }}"
-           {{ template "partials/attrs.html" .field }} />
+           {{ template "partials/attrs.html" .field }} 
+           data-cast="{{ .field.Cast }}"/>
 </div>
 
 {{ end }}

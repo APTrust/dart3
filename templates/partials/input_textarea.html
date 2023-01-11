@@ -1,15 +1,15 @@
 {{ define "partials/input_textarea.html" }}
 
-<div class="form-group {{ .field.formGroupClass }}">
-    <label class="control-label" for="{{ .field.id }}"
-           {{ if .field.help }}data-toggle="popover" data-trigger="hover" title="{{ .field.label }}" data-content="{{.field.help}}"{{ end }}>
-           {{ .field.label }} {{ if .field.attrs.required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} 
-           {{ if .field.help}}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
-    <textarea id="{{ .field.id }}" name="{{ .field.name }}"
+<div class="form-group {{ .field.FormGroupClass }}">
+    <label class="control-label" for="{{ .field.ID }}"
+           {{ if .field.Help }}data-toggle="popover" data-trigger="hover" title="{{ .field.Label }}" data-content="{{.field.Help}}"{{ end }}>
+           {{ .field.Label }} {{ if .field.Attrs.required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} 
+           {{ if .field.Help}}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
+    <textarea id="{{ .field.ID }}" name="{{ .field.Name }}"
            class="form-control {{ template "partials/classes.html" . }}" rows="4"
-           {{ template "partials/classes.html" . }}>{{ .field.value }}</textarea>
-    <small id="{{ .field.id }}Error" class="form-text text-danger">
-      {{ .field.error }}
+           {{ template "partials/attrs.html" . }} data-cast="{{ .field.Cast }}" >{{ .field.Value }}</textarea>
+    <small id="{{ .field.ID }}Error" class="form-text text-danger">
+      {{ .field.Error }}
     </small>
   </div>
 

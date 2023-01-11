@@ -1,11 +1,11 @@
-{{ define "partials/input_text.html" }}
+{{ define "partials/input_number.html" }}
 
 <div class="form-group {{ .field.FormGroupClass }}">
     <label class="control-label {{ if .field.Help }}clickable{{ end }}" for="{{ .field.Name }}"
            {{ if .field.Help }}data-toggle="popover" data-trigger="hover" title="{{ .field.Label }}" data-content="{{ .field.Help }}"{{ end }}>
            {{ .field.Label }} {{ if .field.Required}}<i class="fas fa-asterisk fa-xs text-danger"></i>{{ end }} 
            {{ if .field.Help }}<i class="fas fa-question-circle text-primary"></i>{{ end }}</label>
-    <input type="text" name="{{ .field.Name }}" value="{{ .field.Value }}"
+    <input type="number" name="{{ .field.Name }}" value="{{ .field.Value }}"
            class="form-control {{ template "partials/classes.html" . }}"
            {{ template "partials/attrs.html" . }} 
            data-cast="{{ .field.Cast }}"/>
@@ -15,4 +15,4 @@
   </div>
 
   {{ end }}
-  
+ 

@@ -13,11 +13,13 @@ type Field struct {
 	Value          string
 	Required       bool
 	Help           string
+	Hide           bool
 	Error          string
 	Choices        []Choice
 	CssClasses     []string
 	Attrs          map[string]string
 	Changed        bool
+	Cast           string // Type to cast to, if field is not string. Options: number, bool
 	FormGroupClass string // set to "form-group-hidden" if SystemMustSet or tag has default value - https://github.com/APTrust/dart/blob/213e0a9acde2c73fcc8430ca436263b806228f8f/ui/forms/job_tags_form.js#L80
 }
 
