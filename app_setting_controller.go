@@ -8,6 +8,7 @@ import (
 
 // TODO: Clean up & dedupe code.
 //       Find and abstract the common patterns.
+//       Also decide on caps vs. lowercase field names in templates.
 
 func (a *App) AppSettingList() Response {
 	response := a.initResponse("Settings")
