@@ -114,6 +114,13 @@ func (setting *AppSetting) ToForm() *Form {
 
 	nameField := form.AddField("Name", "Name", setting.Name, true)
 	nameField.Error = setting.Errors["Name"]
+	// If user cannot delete this field, they can't rename it either.
+	// Renaming the setting would prevent the app from finding it,
+	// an in the case of a required setting like "Bagging Directory,"
+	// that would cause lots of problems.
+	if !setting.UserCanDelete {
+		nameField.Attrs["disabled"] = "disabled"
+	}
 
 	valueField := form.AddField("Value", "Value", setting.Value, true)
 	valueField.Error = setting.Errors["Value"]
