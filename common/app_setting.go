@@ -33,7 +33,7 @@ func AppSettingFind(uuid string) (*AppSetting, error) {
 }
 
 func AppSettingList(orderBy string, limit, offset int) ([]*AppSetting, error) {
-	result, err := ObjList("AppSetting", orderBy, limit, offset)
+	result, err := ObjList(TypeAppSetting, orderBy, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (setting *AppSetting) ObjName() string {
 }
 
 func (setting *AppSetting) ObjType() string {
-	return "AppSetting"
+	return TypeAppSetting
 }
 
 func (setting *AppSetting) Save() error {
@@ -77,7 +77,7 @@ func AppSettingFromJson(jsonStr string) (*AppSetting, error) {
 }
 
 func (setting *AppSetting) ToForm() *Form {
-	form := NewForm("AppSetting")
+	form := NewForm(TypeAppSetting)
 
 	form.AddField("ID", "ID", setting.ID, true)
 	form.AddField("UserCanDelete", "UserCanDelete", strconv.FormatBool(setting.UserCanDelete), true)

@@ -76,11 +76,11 @@ func ObjFind(uuid string) (*QueryResult, error) {
 	}
 	qr := NewQueryResult(objType)
 	switch objType {
-	case "AppSetting":
+	case TypeAppSetting:
 		a := &AppSetting{}
 		err = json.Unmarshal([]byte(objJson), a)
 		qr.AppSetting = a
-	case "InternalSetting":
+	case TypeInternalSetting:
 		i := &InternalSetting{}
 		err = json.Unmarshal([]byte(objJson), i)
 		qr.InternalSetting = i
@@ -92,15 +92,16 @@ func ObjFind(uuid string) (*QueryResult, error) {
 }
 
 func ObjList(objType, orderBy string, limit, offset int) (*QueryResult, error) {
-	rows, err := Dart.DB.Query("select obj_json from dart where obj_type=? order by ? limit ? offset ?", objType, orderBy, offset, limit)
+	rows, err := Dart.DB.Query("select obj_json from dart where obj_type = ? order by ? limit ? offset ?", objType, orderBy, limit, offset)
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	qr := NewQueryResult(objType)
 	switch objType {
-	case "AppSetting":
+	case TypeAppSetting:
 		qr.AppSettings, err = appSettingsList(rows)
-	case "InternalSetting":
+	case TypeInternalSetting:
 		qr.InternalSettings, err = internalSettingList(rows)
 	default:
 		return nil, fmt.Errorf("cannot convert unknown type %s to query result", objType)

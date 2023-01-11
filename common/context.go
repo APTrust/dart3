@@ -45,6 +45,7 @@ func initDB(paths *Paths) *sql.DB {
 	// our actual dart db.
 	if TestsAreRunning() {
 		dbPath = ":memory:"
+		//dbPath = path.Join(paths.HomeDir, "Desktop", "dart.db")
 	}
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {

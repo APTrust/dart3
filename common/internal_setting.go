@@ -10,7 +10,9 @@ type InternalSetting struct {
 
 func NewInternalSetting(name, value string) *InternalSetting {
 	return &InternalSetting{
-		ID: uuid.NewString(),
+		ID:    uuid.NewString(),
+		Name:  name,
+		Value: value,
 	}
 }
 
@@ -23,7 +25,7 @@ func InternalSettingFind(uuid string) (*InternalSetting, error) {
 }
 
 func InternalSettingList(orderBy string, limit, offset int) ([]*InternalSetting, error) {
-	result, err := ObjList("InternalSetting", orderBy, limit, offset)
+	result, err := ObjList(TypeInternalSetting, orderBy, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +41,7 @@ func (setting *InternalSetting) ObjName() string {
 }
 
 func (setting *InternalSetting) ObjType() string {
-	return "InternalSetting"
+	return TypeInternalSetting
 }
 
 func (setting *InternalSetting) Save() error {

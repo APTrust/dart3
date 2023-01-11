@@ -9,7 +9,7 @@ import (
 )
 
 func TestInternalSettingPersistence(t *testing.T) {
-	defer common.ClearDartTable()
+	//defer common.ClearDartTable()
 	s1 := common.NewInternalSetting("Setting 1", "Value 1")
 	s2 := common.NewInternalSetting("Setting 2", "Value 2")
 	s3 := common.NewInternalSetting("Setting 3", "Value 3")
