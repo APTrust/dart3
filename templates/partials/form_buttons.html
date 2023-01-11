@@ -3,7 +3,7 @@
 <div class="bottom-buttons">
     {{ if .Form.UserCanDelete }}
     <div class="pull-left">
-      <a class="btn btn-danger" href="#" data-func="{{ .Form.DeleteFunction }}" role="button">Delete</a>
+      <a class="btn btn-danger" href="#" data-func="{{ .Form.DeleteFunction }}" data-func-param="{{ .Form.ObjectID }}" role="button">Delete</a>
     </div>
     {{ end }}
     <div class="pull-right">

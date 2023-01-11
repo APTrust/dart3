@@ -37,6 +37,7 @@ func NewField(name, label, value string, required bool) *Field {
 
 type Form struct {
 	ID             string
+	ObjectID       string
 	Fields         map[string]*Field
 	SubmitFunction string
 	CancelFunction string
@@ -44,10 +45,11 @@ type Form struct {
 	UserCanDelete  bool
 }
 
-func NewForm(id string) *Form {
+func NewForm(formId, objectId string) *Form {
 	return &Form{
-		ID:     id,
-		Fields: make(map[string]*Field),
+		ID:       formId,
+		ObjectID: objectId,
+		Fields:   make(map[string]*Field),
 	}
 }
 

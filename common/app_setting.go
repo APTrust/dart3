@@ -105,7 +105,7 @@ func AppSettingFromJson(jsonStr string) (*AppSetting, error) {
 // ToForm returns a form so the user can edit this AppSetting.
 // The form can be rendered by the app_setting/form.html template.
 func (setting *AppSetting) ToForm() *Form {
-	form := NewForm(TypeAppSetting)
+	form := NewForm(TypeAppSetting, setting.ID)
 
 	form.AddField("ID", "ID", setting.ID, true)
 

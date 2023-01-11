@@ -5,6 +5,7 @@ export namespace main {
 	    modalContent: string;
 	    nav: string;
 	    error: string;
+	    flash: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Response(source);
@@ -16,6 +17,7 @@ export namespace main {
 	        this.modalContent = source["modalContent"];
 	        this.nav = source["nav"];
 	        this.error = source["error"];
+	        this.flash = source["flash"];
 	    }
 	}
 

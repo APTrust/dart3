@@ -71,7 +71,13 @@ function attachNavEvents() {
                     return
                 }
                 item.dataset.funcInitialized = true
-                load(fn, paramString);
+                if (functionName.includes("Delete")) {
+                    if (confirm("Do you want to delete this item?")) {
+                        load(fn, paramString);    
+                    }
+                } else {
+                    load(fn, paramString);
+                }
                 console.log("Attached " + functionName)
             })
         }

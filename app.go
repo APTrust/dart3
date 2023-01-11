@@ -28,6 +28,7 @@ type Response struct {
 	ModalContent string `json:"modalContent"`
 	Nav          string `json:"nav"`
 	Error        string `json:"error"`
+	Flash        string `json:"flash"`
 }
 
 // NewApp creates a new App application struct
