@@ -8,6 +8,12 @@ import (
 	"github.com/google/uuid"
 )
 
+// AppSetting represents an application-wide setting that can be
+// configured by the user. For example, the bagging directory
+// into which DART writes new bags.
+//
+// Field names for JSON serialization match the old DART 2 names,
+// so we don't break legacy installations.
 type AppSetting struct {
 	ID            string            `json:"id"`
 	Name          string            `json:"name"`
@@ -17,13 +23,22 @@ type AppSetting struct {
 	UserCanDelete bool              `json:"userCanDelete"`
 }
 
-func NewAppSetting() *AppSetting {
+// NewAppSetting creates a new AppSetting with the specified name
+// and value. UserCanDelete will be true by default. If a setting
+// is required for DART to function properly (such as the Bagging
+// Directory setting), set UserCanDelete to false.
+func NewAppSetting(name, value string) *AppSetting {
 	return &AppSetting{
-		ID:     uuid.NewString(),
-		Errors: make(map[string]string),
+		ID:            uuid.NewString(),
+		Name:          name,
+		Value:         value,
+		UserCanDelete: true,
+		Errors:        make(map[string]string),
 	}
 }
 
+// AppSettingFind returns the AppSetting with the specified UUID,
+// or sql.ErrNoRows if no matching record exists.
 func AppSettingFind(uuid string) (*AppSetting, error) {
 	result, err := ObjFind(uuid)
 	if err != nil {
@@ -32,6 +47,8 @@ func AppSettingFind(uuid string) (*AppSetting, error) {
 	return result.AppSetting, err
 }
 
+// AppSettingList returns a list of AppSettings with the specified
+// order, offset and limit.
 func AppSettingList(orderBy string, limit, offset int) ([]*AppSetting, error) {
 	result, err := ObjList(TypeAppSetting, orderBy, limit, offset)
 	if err != nil {
@@ -40,18 +57,25 @@ func AppSettingList(orderBy string, limit, offset int) ([]*AppSetting, error) {
 	return result.AppSettings, err
 }
 
+// ObjID returns this setting's object id (uuid).
 func (setting *AppSetting) ObjID() string {
 	return setting.ID
 }
 
+// ObjName returns this object's name, so names will be
+// searchable and sortable in the DB.
 func (setting *AppSetting) ObjName() string {
 	return setting.Name
 }
 
+// ObjType returns this object's type name.
 func (setting *AppSetting) ObjType() string {
 	return TypeAppSetting
 }
 
+// Save saves this setting, if it determines the setting is valid.
+// It returns common.ErrObjecValidation if the setting is invalid.
+// Check setting.Errors if you get a validation error.
 func (setting *AppSetting) Save() error {
 	if !setting.Validate() {
 		return ErrObjecValidation
@@ -59,6 +83,8 @@ func (setting *AppSetting) Save() error {
 	return ObjSave(setting)
 }
 
+// Delete deletes this AppSetting. If the setting is marked with
+// UserCanDelete = false, you'll get a common.ErrNotDeletable error.
 func (setting *AppSetting) Delete() error {
 	if !setting.UserCanDelete {
 		return ErrNotDeletable
@@ -76,6 +102,8 @@ func AppSettingFromJson(jsonStr string) (*AppSetting, error) {
 	return setting, err
 }
 
+// ToForm returns a form so the user can edit this AppSetting.
+// The form can be rendered by the app_setting/form.html template.
 func (setting *AppSetting) ToForm() *Form {
 	form := NewForm(TypeAppSetting)
 
@@ -91,7 +119,11 @@ func (setting *AppSetting) ToForm() *Form {
 	return form
 }
 
+// Validate validates this setting, returning true if it's valid,
+// false if not. If false, this sets specific error messages in the
+// Errors map, which are suitable for display on the form.
 func (setting *AppSetting) Validate() bool {
+	setting.Errors = make(map[string]string)
 	isValid := true
 	if setting.Name == "" {
 		setting.Errors["Name"] = "Name cannot be empty."

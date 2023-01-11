@@ -12,7 +12,7 @@ func (a *App) AppSettingList() Response {
 }
 
 func (a *App) AppSettingCreate() Response {
-	setting := common.NewAppSetting()
+	setting := common.NewAppSetting("", "")
 	response := a.initResponse("Settings")
 	form := setting.ToForm()
 	form.CancelFunction = "AppSettingList"
