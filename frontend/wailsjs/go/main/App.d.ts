@@ -10,7 +10,7 @@ export function AppSettingEdit(arg1:string):Promise<main.Response>;
 
 export function AppSettingList():Promise<main.Response>;
 
-export function AppSettingSave():Promise<main.Response>;
+export function AppSettingSave(arg1:string):Promise<main.Response>;
 
 export function DashboardShow():Promise<main.Response>;
 

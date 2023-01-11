@@ -18,8 +18,8 @@ export function AppSettingList() {
   return window['go']['main']['App']['AppSettingList']();
 }
 
-export function AppSettingSave() {
-  return window['go']['main']['App']['AppSettingSave']();
+export function AppSettingSave(arg1) {
+  return window['go']['main']['App']['AppSettingSave'](arg1);
 }
 
 export function DashboardShow() {

@@ -31,7 +31,7 @@ func (a *App) AppSettingEdit(id string) Response {
 	return response
 }
 
-func (a *App) AppSettingSave() Response {
+func (a *App) AppSettingSave(jsonData string) Response {
 	response := a.initResponse("Settings")
 	response.Content = "App Setting Save"
 	//response.Content = a.renderTemplate("dashboard/show.html", nil)
