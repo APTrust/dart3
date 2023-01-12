@@ -124,7 +124,7 @@ func (setting *AppSetting) ToForm() *Form {
 
 	valueField := form.AddField("Value", "Value", setting.Value, true)
 	valueField.Error = setting.Errors["Value"]
-	valueField.Help = setting.Help
+	valueField.Help = "If the setting has help text, it will be displayed here." // setting.Help
 
 	return form
 }
