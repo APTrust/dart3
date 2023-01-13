@@ -23,11 +23,16 @@ function load(fn, param) {
         //   AppSetting object. This should be passed as JSON with correct
         //   typing (i.e. numbers and numbers, not strings; same for booleans).
         //
-        // 
+        // TODO:
+        // 1. Try returning json object instead of string. See if front-end types handle it.
+        // 2. Make sure we don't pass form data to callbacks that don't use them: e.g. nav items.
         if (!param) {
             param = formToJson()
         }
+
         console.log(`>>> ${fn.name}:  ${param}`)
+        app.Log(`>>> ${fn.name}:  ${param}`)
+
         fn(param)
             .then((result) => {
                 //console.log(result)
@@ -60,7 +65,8 @@ function logError(err) {
 
 function attachNavEvents() {
     document.querySelectorAll("[data-func]").forEach(function(item){
-        let functionName = item.dataset.func;
+        let functionName = item.dataset.func
+        // Check null vs empty string on this?
         let paramString = item.dataset.funcParam
         if (!item.dataset.funcInitialized) {
             item.addEventListener("click", function(e) {
@@ -132,7 +138,8 @@ function formToJson() {
         let cast = ""
         if (vals[i].dataset && vals[i].dataset['cast']) {
             cast = vals[i].dataset['cast']
-        }
+            app.Log(`Form value ${vals[i].name} will be cast to type ${cast}.`)
+        } 
         // If the field says it must be cast to a different type,
         // cast it here. Most values are strings and do not need
         // to be converted. Failure to cast to number/bool will

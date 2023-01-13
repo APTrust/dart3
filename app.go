@@ -4,6 +4,10 @@ import (
 	"bytes"
 	"context"
 	"dart/common"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
 
 	"github.com/APTrust/dart-runner/core"
 )
@@ -47,6 +51,29 @@ func (a *App) DashboardShow() Response {
 	response := a.initResponse("Dashboard")
 	response.Content = a.renderTemplate("dashboard/show.html", nil)
 	return response
+}
+
+func (a *App) AboutShow() Response {
+	appPath := ""
+	file, err := exec.LookPath(os.Args[0])
+	if err != nil {
+		appPath = fmt.Sprintf("Can't get path: %s", err.Error())
+	} else {
+		appPath, _ = filepath.Abs(file)
+	}
+	data := map[string]string{
+		"version":      "3.x-alpha",
+		"appPath":      appPath,
+		"userDataPath": a.Dart.Paths.DataDir,
+		"logFilePath":  a.Dart.Paths.LogDir,
+	}
+	response := a.initResponse("Help")
+	response.Content = a.renderTemplate("about/index.html", data)
+	return response
+}
+
+func (a *App) Log(msg string) {
+	a.Dart.Log.Println(msg)
 }
 
 func (a *App) initResponse(section string) Response {
