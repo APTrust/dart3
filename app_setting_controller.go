@@ -2,7 +2,6 @@ package main
 
 import (
 	"dart/common"
-	"encoding/json"
 	"fmt"
 )
 
@@ -55,13 +54,13 @@ func (a *App) AppSettingEdit(id string) Response {
 	return response
 }
 
-func (a *App) AppSettingSave(jsonStr string) Response {
+func (a *App) AppSettingSave(setting *common.AppSetting) Response {
 	response := a.initResponse("Settings")
-	setting := &common.AppSetting{}
-	err := json.Unmarshal([]byte(jsonStr), setting)
-	if err == nil {
-		err = setting.Save()
-	}
+	//setting := &common.AppSetting{}
+	//err := json.Unmarshal([]byte(jsonStr), setting)
+	//if err == nil {
+	err := setting.Save()
+	//}
 	if err != nil {
 		response.Error = err.Error()
 	} else {

@@ -1,3 +1,30 @@
+export namespace common {
+	
+	export class AppSetting {
+	    id: string;
+	    name: string;
+	    value: string;
+	    help: string;
+	    errors: {[key: string]: string};
+	    userCanDelete: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new AppSetting(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.name = source["name"];
+	        this.value = source["value"];
+	        this.help = source["help"];
+	        this.errors = source["errors"];
+	        this.userCanDelete = source["userCanDelete"];
+	    }
+	}
+
+}
+
 export namespace main {
 	
 	export class Response {

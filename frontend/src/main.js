@@ -20,14 +20,15 @@ function load(fn, param) {
         // * No params for create requests
         // * Update requests will have object params. The object type will
         //   match the request type. E.g. update app setting will take an
-        //   AppSetting object. This should be passed as JSON with correct
-        //   typing (i.e. numbers and numbers, not strings; same for booleans).
+        //   AppSetting object. The formToObject() method will convert the
+        //   form values to a vanilla JavaScript object with correctly typed
+        //   strings, numbers and booleans. Wails' type mapping will convert
+        //   the vanilla object to a Go object of the correct type for the 
+        //   back end.
         //
-        // TODO:
-        // 1. Try returning json object instead of string. See if front-end types handle it.
-        // 2. Make sure we don't pass form data to callbacks that don't use them: e.g. nav items.
+        // TODO: Make sure we don't pass form data to callbacks that don't use them: e.g. nav items.
         if (!param) {
-            param = formToJson()
+            param = formToObject()
         }
 
         console.log(`>>> ${fn.name}:  ${param}`)
@@ -47,19 +48,12 @@ function load(fn, param) {
                 }                
             })
             .catch((err) => {
-                logError(err);
+                console.err(err);
+                runtime.logError(`JS: load caught error ${err}`);
             });
     } catch (err) {
-        logError(err);
-    }
-}
-
-function logError(err) {
-    console.log(err)
-    try {
-        alert(err)
-    } catch (ex) {
-        console.log(ex)
+        console.error(err);
+        runtime.logError(`JS: load caught error ${err}`);
     }
 }
 
@@ -125,7 +119,12 @@ function initMainContentObserver() {
     return observer
 }
 
-function formToJson() {
+// This converts an HTML form to a JavaScript object. This has an
+// advantage over Object.fromEntries() in that it converts values
+// to number and boolean types when required. Otherwise, form entries
+// values are all strings, and Go won't deserialize those to int, 
+// float, or bool.
+function formToObject() {
     if (document.querySelector('form') == null) {
         return null
     }
@@ -153,7 +152,7 @@ function formToJson() {
                 } 
                 value = intVal
             case 'float': 
-                let floatVal = parseInt(value, 10)
+                let floatVal = parseFloat(value, 10)
                 if (isNaN(floatVal)) {
                     floatVal = 0
                 } 
@@ -163,7 +162,7 @@ function formToJson() {
         }
         data[key] = value
     }    
-    return JSON.stringify(data)
+    return data
 }
 
 function boolValue(val) {
@@ -172,7 +171,7 @@ function boolValue(val) {
     }
     var lcString = String(val).toLowerCase();
     var trueValues = ['t', 'true', 'yes', '1'];
-    var falseValues = ['f', 'false', 'no', '0'];
+    //var falseValues = ['f', 'false', 'no', '0'];
     var retValue = false;
     if (trueValues.includes(lcString)) {
         retValue = true;
