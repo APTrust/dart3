@@ -33,7 +33,3 @@ export function DashboardShow() {
 export function JobShowFiles() {
   return window['go']['main']['App']['JobShowFiles']();
 }
-
-export function Log(arg1) {
-  return window['go']['main']['App']['Log'](arg1);
-}

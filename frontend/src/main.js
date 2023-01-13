@@ -31,7 +31,7 @@ function load(fn, param) {
         }
 
         console.log(`>>> ${fn.name}:  ${param}`)
-        app.Log(`>>> ${fn.name}:  ${param}`)
+        runtime.LogDebug(`>>> ${fn.name}:  ${param}`)
 
         fn(param)
             .then((result) => {
@@ -112,7 +112,7 @@ function initPopovers() {
             return $('#popover-content').html();
         }
     }
-    $('body').popover(popOverSettings);
+    $('body').popover(popOverSettings); 
 }
 
 function initMainContentObserver() {
@@ -138,7 +138,7 @@ function formToJson() {
         let cast = ""
         if (vals[i].dataset && vals[i].dataset['cast']) {
             cast = vals[i].dataset['cast']
-            app.Log(`Form value ${vals[i].name} will be cast to type ${cast}.`)
+            runtime.LogDebug(`Form value ${vals[i].name} will be cast to type ${cast}.`)
         } 
         // If the field says it must be cast to a different type,
         // cast it here. Most values are strings and do not need

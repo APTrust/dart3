@@ -17,5 +17,3 @@ export function AppSettingSave(arg1:string):Promise<main.Response>;
 export function DashboardShow():Promise<main.Response>;
 
 export function JobShowFiles():Promise<main.Response>;
-
-export function Log(arg1:string):Promise<void>;

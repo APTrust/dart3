@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/APTrust/dart-runner/core"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -64,16 +65,13 @@ func (a *App) AboutShow() Response {
 	data := map[string]string{
 		"version":      "3.x-alpha",
 		"appPath":      appPath,
-		"userDataPath": a.Dart.Paths.DataDir,
-		"logFilePath":  a.Dart.Paths.LogDir,
+		"userDataPath": common.DataFilePath(),
+		"logFilePath":  common.LogFilePath(),
 	}
+	runtime.LogDebug(a.ctx, "~~~~~~~~~~~~ AboutShow ~~~~~~~~~~~~~~~~")
 	response := a.initResponse("Help")
 	response.Content = a.renderTemplate("about/index.html", data)
 	return response
-}
-
-func (a *App) Log(msg string) {
-	a.Dart.Log.Println(msg)
 }
 
 func (a *App) initResponse(section string) Response {

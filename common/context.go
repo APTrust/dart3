@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"html/template"
 	"log"
-	"os"
 	"path"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -15,7 +14,6 @@ var Dart *DartContext
 type DartContext struct {
 	Templates *template.Template
 	DB        *sql.DB
-	Log       *log.Logger
 	Paths     *Paths
 }
 
@@ -24,30 +22,13 @@ func init() {
 	Dart = &DartContext{
 		Templates: initTemplates(),
 		DB:        initDB(paths),
-		Log:       initLogger(paths),
 		Paths:     paths,
 	}
 	InitSchema()
 }
 
-func initLogger(paths *Paths) *log.Logger {
-	logFile := path.Join(paths.LogDir, "dart.log")
-	f, err := os.OpenFile(logFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		panic(err)
-	}
-	return log.New(f, "", log.LstdFlags)
-}
-
 func initDB(paths *Paths) *sql.DB {
-	dbPath := path.Join(paths.DataDir, "dart.db")
-	// Run tests in an in-memory db, so we don't pollute
-	// our actual dart db.
-	if TestsAreRunning() {
-		dbPath = ":memory:"
-		//dbPath = path.Join(paths.HomeDir, "Desktop", "dart.db")
-	}
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite3", DataFilePath())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,6 +48,23 @@ func initTemplates() *template.Template {
 		t = template.Must(template.New("").Funcs(getFuncMap()).ParseGlob("../../templates/**/*.html"))
 	}
 	return t
+}
+
+func LogFilePath() string {
+	paths := NewPaths()
+	return path.Join(paths.LogDir, "dart.log")
+}
+
+func DataFilePath() string {
+	paths := NewPaths()
+	dbPath := path.Join(paths.DataDir, "dart.db")
+	// Run tests in an in-memory db, so we don't pollute
+	// our actual dart db.
+	if TestsAreRunning() {
+		dbPath = ":memory:"
+		//dbPath = path.Join(paths.HomeDir, "Desktop", "dart.db")
+	}
+	return dbPath
 }
 
 func getFuncMap() template.FuncMap {
