@@ -129,7 +129,10 @@ function formToJson() {
     for (let i=0; i < vals.length; i++) {
         let key = vals[i].name 
         let value = vals[i].value 
-        let cast = vals[i].dataset['cast']
+        let cast = ""
+        if (vals[i].dataset && vals[i].dataset['cast']) {
+            cast = vals[i].dataset['cast']
+        }
         // If the field says it must be cast to a different type,
         // cast it here. Most values are strings and do not need
         // to be converted. Failure to cast to number/bool will
