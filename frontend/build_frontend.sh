@@ -15,4 +15,4 @@ npm run build
 # config, but after reading their fucking docs for four fucking hours 
 # and getting only errors, I decided one line of bash script would be
 # a lot easier. So here it is.
-mkdir -p dist/assets/src/img && cp src/img/*.png dist/assets/src/img
+mkdir -p dist/assets/img && cp assets/img/*.png dist/assets/img

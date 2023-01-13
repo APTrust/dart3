@@ -1,4 +1,3 @@
-import logo from '../src/img/dart.png';
 import * as app from '../wailsjs/go/main/App';
 import $ from "jquery"
 import "bootstrap";
