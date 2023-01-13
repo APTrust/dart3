@@ -31,8 +31,6 @@ export namespace main {
 	    content: string;
 	    modalContent: string;
 	    nav: string;
-	    error: string;
-	    flash: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Response(source);
@@ -43,8 +41,6 @@ export namespace main {
 	        this.content = source["content"];
 	        this.modalContent = source["modalContent"];
 	        this.nav = source["nav"];
-	        this.error = source["error"];
-	        this.flash = source["flash"];
 	    }
 	}
 

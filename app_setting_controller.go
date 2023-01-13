@@ -12,8 +12,6 @@ func (a *App) AppSettingList() *Response {
 		response.Data["error"] = err.Error()
 	}
 	response.Data["items"] = settings
-	response.Data["error"] = response.Error
-	response.Data["flash"] = response.Flash
 	return response.RenderContent()
 }
 
@@ -76,7 +74,5 @@ func (a *App) AppSettingDelete(id string) *Response {
 		response.Data["error"] = err.Error()
 	}
 	response.Data["items"] = settings
-	response.Data["error"] = response.Error
-	response.Data["flash"] = response.Flash
 	return response.RenderContent()
 }

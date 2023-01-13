@@ -37,9 +37,6 @@ func (a *App) DashboardShow() *Response {
 
 // OpenExternal opens a link in an external browser.
 func (a *App) OpenExternal(_url string) *Response {
-	msg := fmt.Sprintf("Opening external link %s", _url)
-	runtime.LogDebug(a.ctx, msg)
-
 	var cmd string
 	var args []string
 	switch go_runtime.GOOS {
@@ -52,7 +49,7 @@ func (a *App) OpenExternal(_url string) *Response {
 		cmd = "xdg-open"
 	}
 
-	msg = fmt.Sprintf("%s %v", cmd, args)
+	msg := fmt.Sprintf("%s %v", cmd, args)
 	runtime.LogDebug(a.ctx, msg)
 	args = append(args, _url)
 	exec.Command(cmd, args...).Start()
@@ -67,7 +64,6 @@ func (a *App) AboutShow() *Response {
 	} else {
 		appPath, _ = filepath.Abs(file)
 	}
-	// runtime.LogDebug(a.ctx, "~~~~~~~~~~~~ AboutShow ~~~~~~~~~~~~~~~~")
 	response := NewResponse("Help", "about/index.html")
 	response.Data["version"] = "3.x-alpha"
 	response.Data["appPath"] = appPath
@@ -75,25 +71,3 @@ func (a *App) AboutShow() *Response {
 	response.Data["logFilePath"] = common.LogFilePath()
 	return response.RenderContent()
 }
-
-// func (a *App) initResponse(section string) Response {
-// 	return Response{
-// 		Nav: a.renderNav(section),
-// 	}
-// }
-
-// func (a *App) renderTemplate(name string, data interface{}) string {
-// 	buf := bytes.Buffer{}
-// 	err := a.Dart.Templates.ExecuteTemplate(&buf, name, data)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	return buf.String()
-// }
-
-// func (a *App) renderNav(section string) string {
-// 	data := map[string]string{
-// 		"section": section,
-// 	}
-// 	return a.renderTemplate("partials/nav.html", data)
-// }

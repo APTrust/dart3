@@ -2,6 +2,7 @@ package common
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -144,4 +145,8 @@ func (setting *AppSetting) Validate() bool {
 		isValid = false
 	}
 	return isValid
+}
+
+func (setting *AppSetting) String() string {
+	return fmt.Sprintf("AppSetting: '%s' = '%s'", setting.Name, setting.Value)
 }

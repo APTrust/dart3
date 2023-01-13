@@ -1,6 +1,10 @@
 package common
 
-import "github.com/google/uuid"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 type InternalSetting struct {
 	ID    string `json:"id"`
@@ -50,4 +54,8 @@ func (setting *InternalSetting) Save() error {
 
 func (setting *InternalSetting) Delete() error {
 	return ObjDelete(setting.ID)
+}
+
+func (setting *InternalSetting) String() string {
+	return fmt.Sprintf("InternalSetting: '%s' = '%s'", setting.Name, setting.Value)
 }

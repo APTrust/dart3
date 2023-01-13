@@ -1,5 +1,7 @@
 package common
 
+import "fmt"
+
 type RemoteRepository struct {
 	ID         string
 	Name       string
@@ -20,4 +22,8 @@ func (repo *RemoteRepository) ObjName() string {
 
 func (repo *RemoteRepository) ObjType() string {
 	return "RemoteRepository"
+}
+
+func (repo *RemoteRepository) String() string {
+	return fmt.Sprintf("RemoteRepository: '%s'", repo.Name)
 }

@@ -1,5 +1,7 @@
 package common
 
+import "fmt"
+
 type Choice struct {
 	Name     string
 	Value    string
@@ -36,7 +38,7 @@ func NewField(name, label, value string, required bool) *Field {
 }
 
 type Form struct {
-	ID             string
+	ObjType        string
 	ObjectID       string
 	Fields         map[string]*Field
 	SubmitFunction string
@@ -45,9 +47,9 @@ type Form struct {
 	UserCanDelete  bool
 }
 
-func NewForm(formId, objectId string) *Form {
+func NewForm(objType, objectId string) *Form {
 	return &Form{
-		ID:       formId,
+		ObjType:  objType,
 		ObjectID: objectId,
 		Fields:   make(map[string]*Field),
 	}
@@ -56,4 +58,8 @@ func NewForm(formId, objectId string) *Form {
 func (f *Form) AddField(name, label, value string, required bool) *Field {
 	f.Fields[name] = NewField(name, label, value, required)
 	return f.Fields[name]
+}
+
+func (f *Form) String() string {
+	return fmt.Sprintf("Form: %s id=%s", f.ObjType, f.ObjectID)
 }
