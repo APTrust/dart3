@@ -18,3 +18,5 @@ export function AppSettingSave(arg1:common.AppSetting):Promise<main.Response>;
 export function DashboardShow():Promise<main.Response>;
 
 export function JobShowFiles():Promise<main.Response>;
+
+export function OpenExternal(arg1:string):Promise<main.Response>;

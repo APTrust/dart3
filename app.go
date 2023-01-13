@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	go_runtime "runtime"
 
 	"github.com/APTrust/dart-runner/core"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -52,6 +53,30 @@ func (a *App) DashboardShow() Response {
 	response := a.initResponse("Dashboard")
 	response.Content = a.renderTemplate("dashboard/show.html", nil)
 	return response
+}
+
+// OpenExternal opens a link in an external browser.
+func (a *App) OpenExternal(_url string) Response {
+	msg := fmt.Sprintf("Opening external link %s", _url)
+	runtime.LogDebug(a.ctx, msg)
+
+	var cmd string
+	var args []string
+	switch go_runtime.GOOS {
+	case "windows":
+		cmd = "cmd"
+		args = []string{"/c", "start"}
+	case "darwin":
+		cmd = "open"
+	default: // "linux", "freebsd", "openbsd", "netbsd"
+		cmd = "xdg-open"
+	}
+
+	msg = fmt.Sprintf("%s %v", cmd, args)
+	runtime.LogDebug(a.ctx, msg)
+	args = append(args, _url)
+	exec.Command(cmd, args...).Start()
+	return Response{}
 }
 
 func (a *App) AboutShow() Response {

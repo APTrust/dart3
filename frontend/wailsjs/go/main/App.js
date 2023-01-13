@@ -33,3 +33,7 @@ export function DashboardShow() {
 export function JobShowFiles() {
   return window['go']['main']['App']['JobShowFiles']();
 }
+
+export function OpenExternal(arg1) {
+  return window['go']['main']['App']['OpenExternal'](arg1);
+}

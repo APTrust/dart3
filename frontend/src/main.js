@@ -48,7 +48,7 @@ function load(fn, param) {
                 }                
             })
             .catch((err) => {
-                console.err(err);
+                console.error(err);
                 runtime.logError(`JS: load caught error ${err}`);
             });
     } catch (err) {
