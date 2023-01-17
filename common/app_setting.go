@@ -1,10 +1,8 @@
 package common
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/google/uuid"
 )
@@ -91,16 +89,6 @@ func (setting *AppSetting) Delete() error {
 		return ErrNotDeletable
 	}
 	return ObjDelete(setting.ID)
-}
-
-func AppSettingFromJson(jsonStr string) (*AppSetting, error) {
-	setting := &AppSetting{}
-	err := json.Unmarshal([]byte(jsonStr), setting)
-	if err == nil {
-		setting.Name = strings.TrimSpace(setting.Name)
-		setting.Value = strings.TrimSpace(setting.Value)
-	}
-	return setting, err
 }
 
 // ToForm returns a form so the user can edit this AppSetting.
