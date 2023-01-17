@@ -30,6 +30,10 @@ export function DashboardShow() {
   return window['go']['main']['App']['DashboardShow']();
 }
 
+export function InternalSettingList() {
+  return window['go']['main']['App']['InternalSettingList']();
+}
+
 export function JobShowFiles() {
   return window['go']['main']['App']['JobShowFiles']();
 }

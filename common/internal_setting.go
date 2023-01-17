@@ -6,6 +6,10 @@ import (
 	"github.com/google/uuid"
 )
 
+// InternalSetting is set by DART and cannot be edited by user.
+// These settings may record when migrations were run, or other
+// internal info. These settings cannot be created or edited by
+// users.
 type InternalSetting struct {
 	ID    string `json:"id"`
 	Name  string `json:"name"`
