@@ -52,3 +52,28 @@ func TestInternalSettingPersistence(t *testing.T) {
 	assert.Equal(t, sql.ErrNoRows, err)
 	assert.Nil(t, deletedRecord)
 }
+
+func TestInternalSettingValidation(t *testing.T) {
+	s1 := common.NewInternalSetting("", "")
+	assert.False(t, s1.Validate())
+	assert.Equal(t, "Name cannot be empty.", s1.Errors["Name"])
+	assert.Equal(t, "Value cannot be empty.", s1.Errors["Value"])
+	assert.Equal(t, common.ErrObjecValidation, s1.Save())
+
+	s1.Name = "Setting 1 Name"
+	assert.False(t, s1.Validate())
+	assert.Equal(t, "", s1.Errors["Name"])
+	assert.Equal(t, "Value cannot be empty.", s1.Errors["Value"])
+	assert.Equal(t, common.ErrObjecValidation, s1.Save())
+
+	s1.Value = "Setting 1 Value"
+	assert.True(t, s1.Validate())
+	assert.Equal(t, "", s1.Errors["Name"])
+	assert.Equal(t, "", s1.Errors["Value"])
+	assert.Nil(t, s1.Save())
+
+	s1Reload, err := common.InternalSettingFind(s1.ID)
+	assert.Nil(t, err)
+	require.NotNil(t, s1Reload)
+	assert.Equal(t, s1.Name, s1Reload.Name)
+}
