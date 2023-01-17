@@ -19,10 +19,7 @@ func (a *App) AppSettingCreate() *Response {
 	setting := common.NewAppSetting("", "")
 	response := NewResponse("Settings", "app_setting/form.html")
 	form := setting.ToForm()
-	form.CancelFunction = "AppSettingList"
-	form.SubmitFunction = "AppSettingSave"
-	form.DeleteFunction = "AppSettingDelete"
-	response.Data["Form"] = form
+	response.Data["form"] = form
 	return response.RenderContent()
 }
 
@@ -33,9 +30,6 @@ func (a *App) AppSettingEdit(id string) *Response {
 		response.Data["error"] = err.Error()
 	}
 	form := setting.ToForm()
-	form.CancelFunction = "AppSettingList"
-	form.SubmitFunction = "AppSettingSave"
-	form.DeleteFunction = "AppSettingDelete"
 	form.UserCanDelete = setting.UserCanDelete
 	response.Data["form"] = form
 	return response.RenderContent()

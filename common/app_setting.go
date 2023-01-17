@@ -127,6 +127,10 @@ func (setting *AppSetting) ToForm() *Form {
 	valueField.Error = setting.Errors["Value"]
 	valueField.Help = "If the setting has help text, it will be displayed here." // setting.Help
 
+	form.CancelFunction = "AppSettingList"
+	form.SubmitFunction = "AppSettingSave"
+	form.DeleteFunction = "AppSettingDelete"
+
 	return form
 }
 
