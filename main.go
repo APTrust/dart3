@@ -14,7 +14,6 @@ import (
 var assets embed.FS
 
 var app *application.App
-var log *common.Logger
 
 func main() {
 	// Create an instance of the app structure
