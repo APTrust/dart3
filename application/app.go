@@ -1,4 +1,4 @@
-package main
+package application
 
 import (
 	"context"
@@ -12,22 +12,31 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
+var app *App
+
 // App struct
 type App struct {
 	ctx  context.Context
 	Dart *common.DartContext
 }
 
-// NewApp creates a new App application struct
-func NewApp() *App {
-	return &App{}
+// GetAppInstance returns the App struct, which is a singleton.
+func GetAppInstance() *App {
+	if app == nil {
+		app = &App{}
+	}
+	return app
 }
 
-// startup is called when the app starts. The context is saved
+// Startup is called when the app starts. The context is saved
 // so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
+func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 	a.Dart = common.Dart
+}
+
+func (a *App) Shutdown(ctx context.Context) {
+	runtime.LogDebug(app.ctx, "Shutting down.")
 }
 
 func (a *App) DashboardShow() *Response {

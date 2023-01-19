@@ -1,3 +1,24 @@
+export namespace application {
+	
+	export class Response {
+	    content: string;
+	    modalContent: string;
+	    nav: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Response(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.content = source["content"];
+	        this.modalContent = source["modalContent"];
+	        this.nav = source["nav"];
+	    }
+	}
+
+}
+
 export namespace common {
 	
 	export class AppSetting {
@@ -20,27 +41,6 @@ export namespace common {
 	        this.help = source["help"];
 	        this.errors = source["errors"];
 	        this.userCanDelete = source["userCanDelete"];
-	    }
-	}
-
-}
-
-export namespace main {
-	
-	export class Response {
-	    content: string;
-	    modalContent: string;
-	    nav: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new Response(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.content = source["content"];
-	        this.modalContent = source["modalContent"];
-	        this.nav = source["nav"];
 	    }
 	}
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dart/application"
 	"dart/common"
 	"embed"
 
@@ -13,11 +14,11 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
-var app *App
+var app *application.App
 
 func main() {
 	// Create an instance of the app structure
-	app = NewApp()
+	app = application.GetAppInstance()
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -28,7 +29,8 @@ func main() {
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 255, G: 255, B: 255, A: 1},
-		OnStartup:        app.startup,
+		OnStartup:        app.Startup,
+		OnShutdown:       app.Shutdown,
 		Bind: []interface{}{
 			app,
 		},

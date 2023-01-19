@@ -1,4 +1,4 @@
-import * as app from '../wailsjs/go/main/App';
+import * as app from '../wailsjs/go/application/App';
 import $ from "jquery"
 import "bootstrap";
 

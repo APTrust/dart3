@@ -1,4 +1,4 @@
-package main
+package application
 
 func (a *App) JobShowFiles() *Response {
 	response := NewResponse("Jobs", "job/files.html")
