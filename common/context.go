@@ -14,6 +14,7 @@ var Dart *DartContext
 type DartContext struct {
 	Templates *template.Template
 	DB        *sql.DB
+	Log       *Logger
 	Paths     *Paths
 }
 
@@ -23,6 +24,7 @@ func init() {
 		Templates: initTemplates(),
 		DB:        initDB(paths),
 		Paths:     paths,
+		Log:       initLogger(LevelDebug),
 	}
 	InitSchema()
 }

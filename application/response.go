@@ -3,8 +3,6 @@ package application
 import (
 	"bytes"
 	"dart/common"
-
-	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 type Response struct {
@@ -25,14 +23,14 @@ func NewResponse(section, templateName string) *Response {
 }
 
 func (r *Response) RenderContent() *Response {
-	runtime.LogDebugf(app.ctx, "Rendering content '%s' with data %v", r.TemplateName, r.Data)
+	common.Dart.Log.Debug("Rendering content '%s' with data %v", r.TemplateName, r.Data)
 	r.Content = r.renderTemplate(r.TemplateName)
 	r.Nav = r.renderTemplate("partials/nav.html")
 	return r
 }
 
 func (r *Response) RenderModal() *Response {
-	runtime.LogDebugf(app.ctx, "Rendering modal '%s' with data %v", r.TemplateName, r.Data)
+	common.Dart.Log.Debug("Rendering modal '%s' with data %v", r.TemplateName, r.Data)
 	r.ModalContent = r.renderTemplate(r.TemplateName)
 	return r
 }

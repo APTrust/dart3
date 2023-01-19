@@ -1,6 +1,8 @@
 import * as app from '../wailsjs/go/application/App';
+import * as log from '../wailsjs/go/common/Logger.js';
 import $ from "jquery"
 import "bootstrap";
+import { common } from '../wailsjs/go/models';
 
 window.addEventListener("load", function(event) {
     load(app.DashboardShow)
@@ -27,12 +29,18 @@ function load(fn, param) {
         //   back end.
         //
         // TODO: Make sure we don't pass form data to callbacks that don't use them: e.g. nav items.
+        var paramForLog = param
         if (!param) {
             param = formToObject()
+            if (param === null) {
+                paramForLog = 'null'
+            } else {
+                paramForLog = JSON.stringify(param)
+            }
         }
 
-        console.log(`>>> ${fn.name}:  ${param}`)
-        runtime.LogDebug(`>>> ${fn.name}:  ${param}`)
+        console.log(`>>> ${fn.name}:  ${paramForLog}`)
+        log.Debug(`${fn.name} %s`, [paramForLog])
 
         fn(param)
             .then((result) => {

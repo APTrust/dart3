@@ -6,7 +6,6 @@ import (
 	"embed"
 
 	"github.com/wailsapp/wails/v2"
-	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 )
@@ -15,6 +14,7 @@ import (
 var assets embed.FS
 
 var app *application.App
+var log *common.Logger
 
 func main() {
 	// Create an instance of the app structure
@@ -33,10 +33,11 @@ func main() {
 		OnShutdown:       app.Shutdown,
 		Bind: []interface{}{
 			app,
+			common.Dart.Log,
 		},
-		Logger:             logger.NewFileLogger(common.LogFilePath()),
-		LogLevel:           logger.DEBUG,
-		LogLevelProduction: logger.INFO,
+		//Logger:             logger.NewFileLogger(common.LogFilePath()),
+		//LogLevel:           logger.DEBUG,
+		//LogLevelProduction: logger.INFO,
 	})
 
 	if err != nil {
