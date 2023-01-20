@@ -84,6 +84,10 @@ func ObjFind(uuid string) (*QueryResult, error) {
 		i := &InternalSetting{}
 		err = json.Unmarshal([]byte(objJson), i)
 		qr.InternalSetting = i
+	case TypeRemoteRepository:
+		r := &RemoteRepository{}
+		err = json.Unmarshal([]byte(objJson), r)
+		qr.RemoteRepository = r
 	default:
 		return nil, fmt.Errorf("cannot convert unknown type %s to query result", objType)
 	}
@@ -103,6 +107,8 @@ func ObjList(objType, orderBy string, limit, offset int) (*QueryResult, error) {
 		qr.AppSettings, err = appSettingsList(rows)
 	case TypeInternalSetting:
 		qr.InternalSettings, err = internalSettingList(rows)
+	case TypeRemoteRepository:
+		qr.RemoteRepositories, err = remoteRepositoryList(rows)
 	default:
 		return nil, fmt.Errorf("cannot convert unknown type %s to query result", objType)
 	}

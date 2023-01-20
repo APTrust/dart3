@@ -1,9 +1,10 @@
 package common
 
 const (
-	CastToNumber        = "number"
-	CastToBool          = "bool"
-	CastToDate          = "date"
-	TypeAppSetting      = "AppSetting"
-	TypeInternalSetting = "InternalSetting"
+	CastToNumber         = "number"
+	CastToBool           = "bool"
+	CastToDate           = "date"
+	TypeAppSetting       = "AppSetting"
+	TypeInternalSetting  = "InternalSetting"
+	TypeRemoteRepository = "RemoteRepository"
 )

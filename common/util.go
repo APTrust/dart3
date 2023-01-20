@@ -3,6 +3,7 @@ package common
 import (
 	"errors"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -20,4 +21,11 @@ func TestsAreRunning() bool {
 		}
 	}
 	return false
+}
+
+// LooksLikeHypertextURL returns true if str looks like an
+// HTTP or HTTPS URL.
+func LooksLikeHypertextURL(str string) bool {
+	pattern := regexp.MustCompile(`(^http://localhost)|(https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))`)
+	return pattern.MatchString(str)
 }
