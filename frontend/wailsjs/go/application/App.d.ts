@@ -22,3 +22,13 @@ export function InternalSettingList():Promise<application.Response>;
 export function JobShowFiles():Promise<application.Response>;
 
 export function OpenExternal(arg1:string):Promise<application.Response>;
+
+export function RemoteRepositoryCreate():Promise<application.Response>;
+
+export function RemoteRepositoryDelete(arg1:string):Promise<application.Response>;
+
+export function RemoteRepositoryEdit(arg1:string):Promise<application.Response>;
+
+export function RemoteRepositoryList():Promise<application.Response>;
+
+export function RemoteRepositorySave(arg1:common.RemoteRepository):Promise<application.Response>;

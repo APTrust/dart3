@@ -103,6 +103,11 @@ func (repo *RemoteRepository) Validate() bool {
 	return true
 }
 
+func (repo *RemoteRepository) ToForm() *Form {
+	// TODO: Implement this.
+	return nil
+}
+
 func remoteRepositoryList(rows *sql.Rows) ([]*RemoteRepository, error) {
 	list := make([]*RemoteRepository, 0)
 	for rows.Next() {

@@ -1,8 +1,8 @@
 import * as app from '../wailsjs/go/application/App';
 import * as log from '../wailsjs/go/common/Logger.js';
+import { common } from '../wailsjs/go/models';
 import $ from "jquery"
 import "bootstrap";
-import { common } from '../wailsjs/go/models';
 
 window.addEventListener("load", function(event) {
     load(app.DashboardShow)
@@ -61,7 +61,7 @@ function load(fn, param) {
             });
     } catch (err) {
         console.error(err);
-        runtime.logError(`JS: load caught error ${err}`);
+        log.Debug("JS: load caught error %s", [err]);
     }
 }
 

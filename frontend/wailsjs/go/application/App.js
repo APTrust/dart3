@@ -41,3 +41,23 @@ export function JobShowFiles() {
 export function OpenExternal(arg1) {
   return window['go']['application']['App']['OpenExternal'](arg1);
 }
+
+export function RemoteRepositoryCreate() {
+  return window['go']['application']['App']['RemoteRepositoryCreate']();
+}
+
+export function RemoteRepositoryDelete(arg1) {
+  return window['go']['application']['App']['RemoteRepositoryDelete'](arg1);
+}
+
+export function RemoteRepositoryEdit(arg1) {
+  return window['go']['application']['App']['RemoteRepositoryEdit'](arg1);
+}
+
+export function RemoteRepositoryList() {
+  return window['go']['application']['App']['RemoteRepositoryList']();
+}
+
+export function RemoteRepositorySave(arg1) {
+  return window['go']['application']['App']['RemoteRepositorySave'](arg1);
+}

@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+var reUrl = regexp.MustCompile(`(^http://localhost)|(https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))`)
+
 // FileExists returns true if a file or directory exists at filePath.
 func FileExists(filePath string) bool {
 	_, error := os.Stat(filePath)
@@ -26,6 +28,5 @@ func TestsAreRunning() bool {
 // LooksLikeHypertextURL returns true if str looks like an
 // HTTP or HTTPS URL.
 func LooksLikeHypertextURL(str string) bool {
-	pattern := regexp.MustCompile(`(^http://localhost)|(https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))`)
-	return pattern.MatchString(str)
+	return reUrl.MatchString(str)
 }
