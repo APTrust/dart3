@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+
+	"github.com/google/uuid"
 )
 
 // RemoteRepository contains config settings describing how to
@@ -27,6 +29,12 @@ type RemoteRepository struct {
 	LoginExtra string            `json:"loginExtra"`
 	PluginID   string            `json:"pluginId"`
 	Errors     map[string]string `json:"errors"`
+}
+
+func NewRemoteRepository() *RemoteRepository {
+	return &RemoteRepository{
+		ID: uuid.NewString(),
+	}
 }
 
 // RemoteRepositoryFind returns the RemoteRepository with the specified UUID,
@@ -89,7 +97,7 @@ func (repo *RemoteRepository) Delete() error {
 func (repo *RemoteRepository) Validate() bool {
 	repo.Errors = make(map[string]string)
 	if !LooksLikeHypertextURL(repo.Url) {
-		repo.Errors["url"] = "Repository URL must a valid URL beginning with http:// or https://."
+		repo.Errors["Url"] = "Repository URL must a valid URL beginning with http:// or https://."
 		return false
 	}
 	return true

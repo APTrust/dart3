@@ -59,6 +59,9 @@ func TestAppSettingPersistence(t *testing.T) {
 }
 
 func TestAppSettingValidation(t *testing.T) {
+	// Post-test cleanup
+	defer common.ClearDartTable()
+
 	s1 := common.NewAppSetting("", "")
 	assert.False(t, s1.Validate())
 	assert.Equal(t, "Name cannot be empty.", s1.Errors["Name"])
