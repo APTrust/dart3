@@ -94,7 +94,7 @@ func (setting *AppSetting) Delete() error {
 // ToForm returns a form so the user can edit this AppSetting.
 // The form can be rendered by the app_setting/form.html template.
 func (setting *AppSetting) ToForm() *Form {
-	form := NewForm(TypeAppSetting, setting.ID)
+	form := NewForm(TypeAppSetting, setting.ID, setting.Errors)
 
 	form.AddField("ID", "ID", setting.ID, true)
 
@@ -102,7 +102,6 @@ func (setting *AppSetting) ToForm() *Form {
 	userCanDeleteField.Cast = CastToBool
 
 	nameField := form.AddField("Name", "Name", setting.Name, true)
-	nameField.Error = setting.Errors["Name"]
 	// If user cannot delete this field, they can't rename it either.
 	// Renaming the setting would prevent the app from finding it,
 	// an in the case of a required setting like "Bagging Directory,"
@@ -112,12 +111,7 @@ func (setting *AppSetting) ToForm() *Form {
 	}
 
 	valueField := form.AddField("Value", "Value", setting.Value, true)
-	valueField.Error = setting.Errors["Value"]
 	valueField.Help = "If the setting has help text, it will be displayed here." // setting.Help
-
-	form.CancelFunction = "AppSettingList"
-	form.SubmitFunction = "AppSettingSave"
-	form.DeleteFunction = "AppSettingDelete"
 
 	return form
 }
