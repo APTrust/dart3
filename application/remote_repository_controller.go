@@ -12,7 +12,8 @@ func (a *App) RemoteRepositoryList() *Response {
 
 func (a *App) RemoteRepositoryCreate() *Response {
 	//repo := common.NewRemoteRepository()
-	response := NewResponse("Settings", "remote_repository/list.html")
+	response := NewResponse("Settings", "remote_repository/form.html")
+	response.Content = "This will be the remote repo form."
 
 	return response.RenderContent()
 }

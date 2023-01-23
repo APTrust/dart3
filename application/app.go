@@ -12,14 +12,16 @@ var app *App
 
 // App struct
 type App struct {
-	Ctx  context.Context
+	ctx  context.Context
 	Dart *common.DartContext
 }
 
 // GetAppInstance returns the App struct, which is a singleton.
 func GetAppInstance() *App {
 	if app == nil {
-		app = &App{}
+		app = &App{
+			Dart: common.Dart,
+		}
 	}
 	return app
 }
@@ -27,8 +29,7 @@ func GetAppInstance() *App {
 // Startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) Startup(ctx context.Context) {
-	a.Ctx = ctx
-	a.Dart = common.Dart
+	a.ctx = ctx
 }
 
 func (a *App) Shutdown(ctx context.Context) {
