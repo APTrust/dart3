@@ -115,7 +115,7 @@ func (repo *RemoteRepository) ToForm() *Form {
 
 	pluginIdField := form.AddField("PluginID", "Plugin ID", repo.PluginID, false)
 	pluginIdField.AddChoice("", "")
-	pluginIdField.AddChoice("APTrustClient", PluginAPTrustClient)
+	pluginIdField.AddChoice("APTrustClient", PluginIdAPTrustClient)
 
 	return form
 }
