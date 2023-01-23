@@ -11,10 +11,10 @@ func (a *App) RemoteRepositoryList() *Response {
 }
 
 func (a *App) RemoteRepositoryCreate() *Response {
-	//repo := common.NewRemoteRepository()
+	repo := common.NewRemoteRepository()
 	response := NewResponse("Settings", "remote_repository/form.html")
-	response.Content = "This will be the remote repo form."
-
+	form := repo.ToForm()
+	response.Data["form"] = form
 	return response.RenderContent()
 }
 

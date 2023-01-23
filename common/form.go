@@ -3,13 +3,13 @@ package common
 import "fmt"
 
 type Choice struct {
-	Name     string
+	Label    string
 	Value    string
 	Selected bool
 }
 
 type Field struct {
-	//ID             string
+	ID             string
 	Name           string
 	Label          string
 	Value          string

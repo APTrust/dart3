@@ -104,8 +104,39 @@ func (repo *RemoteRepository) Validate() bool {
 }
 
 func (repo *RemoteRepository) ToForm() *Form {
-	// TODO: Implement this.
-	return nil
+	form := NewForm(TypeRemoteRepository, repo.ID)
+
+	form.AddField("ID", "ID", repo.ID, true)
+
+	nameField := form.AddField("Name", "Name", repo.Name, true)
+	nameField.Error = repo.Errors["Name"]
+
+	urlField := form.AddField("Url", "URL", repo.Url, true)
+	urlField.Error = repo.Errors["Url"]
+
+	// TODO: Improve creation of choices for select list.
+	// TODO: Restore auto-generated ids, as in DART 2
+	pluginIdField := form.AddField("PluginID", "Plugin ID", repo.PluginID, true)
+	pluginIdField.Error = repo.Errors["PluginID"]
+	pluginIdField.Choices = []Choice{
+		{"", "", repo.PluginID == ""},
+		{"APTrustClient", PluginAPTrustClient, repo.PluginID == PluginAPTrustClient},
+	}
+	pluginIdField.ID = "RemoteRepostoryForm_PluginID"
+
+	userIdField := form.AddField("UserID", "User", repo.UserID, true)
+	userIdField.Error = repo.Errors["UserID"]
+
+	apiTokenField := form.AddField("APIToken", "API Token", repo.APIToken, true)
+	apiTokenField.Error = repo.Errors["APIToken"]
+
+	loginExtraField := form.AddField("LoginExtra", "Login Extra", repo.LoginExtra, true)
+	loginExtraField.Error = repo.Errors["LoginExtra"]
+
+	form.CancelFunction = "RemoteRepositoryList"
+	form.SubmitFunction = "RemoteRepositorySave"
+	form.DeleteFunction = "RemoteRepositoryDelete"
+	return form
 }
 
 func remoteRepositoryList(rows *sql.Rows) ([]*RemoteRepository, error) {
