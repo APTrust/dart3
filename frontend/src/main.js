@@ -146,7 +146,7 @@ function formToObject() {
         let cast = ""
         if (vals[i].dataset && vals[i].dataset['cast']) {
             cast = vals[i].dataset['cast']
-            runtime.LogDebug(`Form value ${vals[i].name} will be cast to type ${cast}.`)
+            log.Debug(`Form value ${vals[i].name} will be cast to type ${cast}.`)
         } 
         // If the field says it must be cast to a different type,
         // cast it here. Most values are strings and do not need

@@ -39,6 +39,8 @@ func (a *App) AppSettingSave(setting *common.AppSetting) *Response {
 	response := NewResponse("Settings", "app_setting/list.html")
 	err := setting.Save()
 	if err != nil {
+		response.TemplateName = "app_setting/form.html"
+		response.Data["form"] = setting.ToForm()
 		response.Data["error"] = err.Error()
 		return response.RenderContent()
 	} else {
