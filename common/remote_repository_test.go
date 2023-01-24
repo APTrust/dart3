@@ -71,6 +71,6 @@ func TestRemoteRepositoryValidation(t *testing.T) {
 
 	rr1.Url = "this-aint-no-url"
 	assert.False(t, rr1.Validate())
-	assert.Equal(t, "Repository URL must a valid URL beginning with http:// or https://.", rr1.Errors["Url"])
+	assert.Equal(t, "Repository URL must be a valid URL beginning with http:// or https://.", rr1.Errors["Url"])
 	assert.Equal(t, common.ErrObjecValidation, rr1.Save())
 }

@@ -3,6 +3,7 @@ module dart
 go 1.18
 
 require (
+	github.com/APTrust/dart-runner v0.0.0-20220811141742-7dae47e1019f
 	github.com/google/uuid v1.3.0
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.8.0

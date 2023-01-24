@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/APTrust/dart-runner/util"
 	"github.com/google/uuid"
 )
 
@@ -122,6 +123,10 @@ func (setting *AppSetting) ToForm() *Form {
 func (setting *AppSetting) Validate() bool {
 	setting.Errors = make(map[string]string)
 	isValid := true
+	if !util.LooksLikeUUID(setting.ID) {
+		setting.Errors["ID"] = "ID must be a valid uuid."
+		isValid = false
+	}
 	if setting.Name == "" {
 		setting.Errors["Name"] = "Name cannot be empty."
 		isValid = false

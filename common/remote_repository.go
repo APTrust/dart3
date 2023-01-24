@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"strings"
 
+	"github.com/APTrust/dart-runner/util"
 	"github.com/google/uuid"
 )
 
@@ -96,11 +98,16 @@ func (repo *RemoteRepository) Delete() error {
 // false.
 func (repo *RemoteRepository) Validate() bool {
 	repo.Errors = make(map[string]string)
-	if !LooksLikeHypertextURL(repo.Url) {
-		repo.Errors["Url"] = "Repository URL must a valid URL beginning with http:// or https://."
-		return false
+	if !util.LooksLikeUUID(repo.ID) {
+		repo.Errors["ID"] = "ID must be a valid uuid."
 	}
-	return true
+	if strings.TrimSpace(repo.Name) == "" {
+		repo.Errors["Name"] = "Please enter a name."
+	}
+	if !LooksLikeHypertextURL(repo.Url) {
+		repo.Errors["Url"] = "Repository URL must be a valid URL beginning with http:// or https://."
+	}
+	return len(repo.Errors) == 0
 }
 
 func (repo *RemoteRepository) ToForm() *Form {

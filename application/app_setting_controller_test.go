@@ -16,6 +16,7 @@ func TestAppSettingController(t *testing.T) {
 
 	testAppSettingCreate(t, app)
 	testAppSettingSave(t, app)
+	testAppSettingSaveInvalid(t, app)
 	testAppSettingEdit(t, app)
 	testAppSettingDelete(t, app)
 	testAppSettingList(t, app)
@@ -42,6 +43,14 @@ func testAppSettingSave(t *testing.T, app *application.App) {
 	}
 }
 
+func testAppSettingSaveInvalid(t *testing.T, app *application.App) {
+	setting := common.NewAppSetting("", "")
+	resp := app.AppSettingSave(setting)
+	assert.Equal(t, "object contains validation errors", resp.Data["error"])
+	assert.Contains(t, resp.Content, "Name cannot be empty")
+	assert.Contains(t, resp.Content, "Value cannot be empty")
+}
+
 func testAppSettingEdit(t *testing.T, app *application.App) {
 	setting := getFirstAppSetting(t, app)
 	resp := app.AppSettingEdit(setting.ID)
@@ -58,6 +67,10 @@ func testAppSettingDelete(t *testing.T, app *application.App) {
 	resp := app.AppSettingDelete(setting.ID)
 	require.Empty(t, resp.Data["error"])
 	require.NotEmpty(t, resp.Content)
+
+	deletedSetting, err := common.AppSettingFind(setting.ID)
+	assert.NotNil(t, err)
+	assert.Nil(t, deletedSetting)
 }
 
 func testAppSettingList(t *testing.T, app *application.App) {
